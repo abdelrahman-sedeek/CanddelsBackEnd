@@ -1,21 +1,18 @@
-﻿using static CanddelsBackEnd.Models.Product;
+﻿using System.ComponentModel.DataAnnotations;
+using static CanddelsBackEnd.Models.Product;
 
 namespace CanddelsBackEnd.Models
 {
     public class Discount
-    {
-       
-            public int Id { get; set; }
-            public string Name { get; set; } // Ex "Daily Discount"
-            public decimal DiscountAmount { get; set; } // Fixed amount or percentage
-            public bool IsPercentage { get; set; } // True for percentage False for fixed amount
-            public DateTime StartDate { get; set; }
-            public DateTime EndDate { get; set; }
-            public bool IsDaily { get; set; } // True if this is a daily discount
-            public int? ProductId { get; set; } // Optional (null if applied to all products)
+    {    
+        public int Id { get; set; }
 
-            public Product Product { get; set; }
+        [Range(0, 100, ErrorMessage = "Discount percentage must be between 0 and 100.")]
+        public decimal DiscountPercentage { get; set; } 
+        public decimal? PriceAfterDiscount { get; set; }
+        public bool? IsDiscounted { get; set; } 
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }    
   
-
     }
 }

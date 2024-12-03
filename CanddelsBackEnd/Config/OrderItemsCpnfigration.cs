@@ -9,16 +9,21 @@ namespace CanddelsBackEnd.Config
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            builder.Property(oi => oi.Subtotal)
+            builder.Property(oi => oi.Total)
                    .HasPrecision(18, 2);
-
-            builder .Property(oi => oi.UnitPrice)
-                    .HasPrecision(18, 2);
            
             // Order and OrderItems (One-to-Many)
             builder.HasOne(oi => oi.Order)
                 .WithMany(o => o.OrderItems)
                 .HasForeignKey(oi => oi.OrderId);
+
+
+            builder.HasOne(oi => oi.productVariant)
+                .WithOne(oi=>oi.OrderItem)
+                .HasForeignKey<ProductVariant>(oi => oi.OrderItemId);
+
+
+
         }
     }
 }

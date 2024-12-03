@@ -9,7 +9,7 @@ namespace CanddelsBackEnd.Config
     {
         public void Configure(EntityTypeBuilder<Payment> builder)
         {
-            builder.Property(p => p.Amount)
+            builder.Property(p => p.TotalPrice)
            .HasPrecision(18, 2);
             // Order and Payment (One-to-One)
             builder.HasOne(p => p.Order)

@@ -8,11 +8,19 @@ namespace CanddelsBackEnd.Config
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.Property(p => p.BasePrice)
-                   .HasPrecision(18, 2);
+            builder.Property(p => p.Features)
+                .HasColumnType("nvarchar(max)"); 
+            
+            builder.Property(p => p.Benefits)
+                .HasColumnType("nvarchar(max)");
 
-            builder.Property(p => p.DefaultWeight)
-                   .HasPrecision(18, 2);
+
+            builder.HasOne(p => p.Category)
+                .WithMany(p => p.products)
+                .HasForeignKey(p => p.CategoryId);
+
+
+
         }
     }
 }

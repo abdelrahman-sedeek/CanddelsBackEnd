@@ -9,15 +9,12 @@ namespace CanddelsBackEnd.Config
     {
         public void Configure(EntityTypeBuilder<Discount> builder)
         {
-            builder
-                 .Property(d => d.DiscountAmount)
-                .HasPrecision(18, 2);
-            // Product and Discounts (One-to-Many or Optional)
-            builder
-                .HasOne(d => d.Product)
-                .WithMany(p => p.Discounts)
-                .HasForeignKey(d => d.ProductId)
-                .IsRequired(false);
+            builder.Property(d => d.DiscountPercentage)
+            .HasColumnType("decimal(5, 2)"); 
+            
+            builder.Property(d => d.PriceAfterDiscount)
+            .HasColumnType("decimal(5, 2)");
+
         }
     }
 }

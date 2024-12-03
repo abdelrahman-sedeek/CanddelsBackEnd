@@ -4,6 +4,7 @@ using CanddelsBackEnd.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CanddelsBackEnd.Migrations
 {
     [DbContext(typeof(CandelContext))]
-    partial class CandelContextModelSnapshot : ModelSnapshot
+    [Migration("20241202194816_RefactorDataBase")]
+    partial class RefactorDataBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,9 +105,6 @@ namespace CanddelsBackEnd.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsDiscounted")
-                        .HasColumnType("bit");
 
                     b.Property<decimal?>("PriceAfterDiscount")
                         .HasColumnType("decimal(5, 2)");

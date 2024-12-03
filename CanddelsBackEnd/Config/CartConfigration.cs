@@ -9,9 +9,9 @@ namespace CanddelsBackEnd.Config
     {
         public void Configure(EntityTypeBuilder<Cart> builder)
         {
-            builder.HasOne(c => c.User)
-                   .WithOne(u => u.Cart)
-                   .HasForeignKey<Cart>(c => c.UserId);
+            builder.HasKey(x => x.Id);
+            
+
         }
     }
 }

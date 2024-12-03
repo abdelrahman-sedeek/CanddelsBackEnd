@@ -11,11 +11,18 @@ namespace CanddelsBackEnd.Config
         {
 
             builder
-                .Property(o => o.TotalPrice)
+                .Property(o => o.SubTotal)
                 .HasPrecision(18, 2);
-            builder.HasOne(o => o.User)
-                   .WithMany(u => u.Orders)
-                   .HasForeignKey(o => o.UserId);
+
+
+            builder.HasOne(o => o.ShippingDetail)
+                .WithOne(o => o.Order)
+                .HasForeignKey<ShippingDetail>(o => o.OrderId);
+
+            builder.HasOne(o => o.Payment)
+                .WithOne(o => o.Order)
+                .HasForeignKey<Payment>(o => o.OrderId);
+           
         }
     }
 }

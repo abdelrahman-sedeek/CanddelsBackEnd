@@ -3,13 +3,9 @@
     public class Cart
     {
       
-            public int Id { get; set; }
-            public int UserId { get; set; }
-            public DateTime CreatedAt { get; set; }
-            public DateTime UpdatedAt { get; set; }
-            public User User { get; set; }
-            public ICollection<CartItem> CartItems { get; set; }
- 
+        public int Id { get; set; }
+        public string SessionId { get; set; } // Using string for flexibility and global uniqueness
+        public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
     }
 }

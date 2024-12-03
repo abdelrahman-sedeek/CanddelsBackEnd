@@ -13,10 +13,11 @@ namespace CanddelsBackEnd.Config
             builder.HasOne(ci => ci.Cart)
                 .WithMany(c => c.CartItems)
                 .HasForeignKey(ci => ci.CartId);
-            // Product and CartItems (One-to-Many)
-           builder.HasOne(ci => ci.Product)
-                .WithMany()
-                .HasForeignKey(ci => ci.ProductId);
+
+            builder.HasOne(ci => ci.ProductVariant)
+                .WithOne(ci => ci.CartItem)
+                .HasForeignKey<CartItem>(ci => ci.ProductVariantId);
+            
         }
     }
 }
