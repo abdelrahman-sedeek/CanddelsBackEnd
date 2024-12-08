@@ -15,6 +15,8 @@ using CanddelsBackEnd.Repositories.PorductRepo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
+
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +24,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<CandelContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
-
 builder.Services.Configure<AdminCredentials>(builder.Configuration.GetSection("AdminCredentials"));
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddScoped<AdminCredentialsSeeder>();
@@ -30,6 +31,8 @@ builder.Services.AddScoped<AdminCredentialsManager>();
 builder.Services.AddScoped<IPasswordHasher<AdminCredentials>, PasswordHasher<AdminCredentials>>();
 var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
 builder.Services.AddSingleton<JwtTokenService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 builder.Services.AddAuthentication()
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>

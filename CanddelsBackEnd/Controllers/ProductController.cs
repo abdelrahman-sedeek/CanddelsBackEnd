@@ -1,4 +1,6 @@
-﻿using CanddelsBackEnd.Models;
+﻿using AutoMapper;
+using CanddelsBackEnd.Dtos;
+using CanddelsBackEnd.Models;
 using CanddelsBackEnd.Repositories.GenericRepo;
 using CanddelsBackEnd.Specifications;
 using Microsoft.AspNetCore.Mvc;
@@ -10,17 +12,21 @@ namespace CanddelsBackEnd.Controllers
     public class ProductController: ControllerBase
     {
         private readonly IGenericRepository<Product> _productRepo;
-        public ProductController(IGenericRepository<Product> productRepo)
+        private readonly IMapper _mapper;
+
+        public ProductController(IGenericRepository<Product> productRepo,IMapper mapper)
         {
             _productRepo = productRepo;
-
-        }
+            _mapper = mapper;
+        } 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> Getproducts()
+        public async Task<ActionResult<List<ProductToReturnDto>>> Getproducts()
         {
             var spec = new ProductSpesification();
             var products = await _productRepo.GetAllWithSpecAsync(spec);
-            return Ok(products);
+            var productsToReturn = _mapper.Map<List<Product>, List<ProductToReturnDto>>(products);
+
+            return Ok(productsToReturn);
         }
 
         [HttpGet("{id}")]
