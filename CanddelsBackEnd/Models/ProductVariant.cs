@@ -4,10 +4,9 @@ using static CanddelsBackEnd.Models.Product;
 
 namespace CanddelsBackEnd.Models
 {
-    public class ProductVariant
+    public class ProductVariant : BaseEntity
     {
 
-        public int Id { get; set; } 
         public decimal Barcode { get; set; }
         public int StockQuantity { get; set; }
         public string Weight { get; set; }

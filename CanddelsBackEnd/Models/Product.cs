@@ -6,9 +6,8 @@ using System.Xml;
 
 namespace CanddelsBackEnd.Models
 {
-    public class Product
+    public class Product : BaseEntity
     {  
-        public int Id { get; set; }       
         public string Name { get; set; }
         public string Description { get; set; }
         public string Scent { get; set; }

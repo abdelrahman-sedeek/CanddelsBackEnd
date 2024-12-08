@@ -1,8 +1,7 @@
 ﻿namespace CanddelsBackEnd.Models
 {
-    public class Order
+    public class Order : BaseEntity
     {
-        public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal SubTotal { get; set; }
         public string OrderStatus { get; set; } // Pending, Delivered //enum
