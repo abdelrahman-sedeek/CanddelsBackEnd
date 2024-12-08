@@ -1,0 +1,313 @@
+[
+    {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+     {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+     {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+     {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 1
+       
+    },
+     {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 2
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 2
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 2
+       
+    },
+    {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 3
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 3
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 3
+       
+    },
+    {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 4
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 4
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 4
+       
+    },
+    {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 5
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 5
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 6
+       
+    },
+    {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 6
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 7
+       
+    },
+    {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 7
+       
+    },
+    {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 7
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 7
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 7
+       
+    },
+    {
+        "Barcode": 6225000618831,
+        "Weight": 100.0,
+        "Price": 381.15,
+       
+        "StockQuantity": 20,
+        "ProductId": 8
+       
+    },
+    {
+        "Barcode": 6225000618817,
+        "Weight": 200.0,
+        "Price": 508.2,
+        "StockQuantity": 20,
+        "ProductId": 8
+       
+    },
+     {
+        "Barcode": 6225000618824,
+        "Weight": 300.0,
+        "Price": 635.25,
+        "StockQuantity": 20,
+        "ProductId": 8
+       
+    },
+    {
+        "Barcode": 6225000618879,
+        "Weight": 50,
+        "Price": 191,
+        "StockQuantity": 20,
+        "ProductId": 9
+       
+    },
+    {
+        "Barcode": 6225000618848,
+        "Weight": 30,
+        "Price": 127,
+        "StockQuantity": 20,
+        "ProductId": 9
+       
+    },   
+    {
+        "Barcode": 6225000618855,
+        "Weight": 20,
+        "Price": 100,
+        "StockQuantity": 20,
+        "ProductId": 9
+       
+    },
+    {
+        "Barcode": 6225000618831,
+        "Weight": 100,
+        "Price": 250,
+        "StockQuantity": 20,
+        "ProductId": 9
+       
+    }
+    
+    
+    
+   
+]

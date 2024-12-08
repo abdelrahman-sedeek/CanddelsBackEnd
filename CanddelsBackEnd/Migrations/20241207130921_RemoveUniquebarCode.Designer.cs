@@ -4,6 +4,7 @@ using CanddelsBackEnd.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CanddelsBackEnd.Migrations
 {
     [DbContext(typeof(CandelContext))]
-    partial class CandelContextModelSnapshot : ModelSnapshot
+    [Migration("20241207130921_RemoveUniquebarCode")]
+    partial class RemoveUniquebarCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

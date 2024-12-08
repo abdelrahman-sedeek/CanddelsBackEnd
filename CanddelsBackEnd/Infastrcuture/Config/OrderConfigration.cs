@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
 
-namespace CanddelsBackEnd.Config
+namespace CanddelsBackEnd.Infastrcuture.Config
 {
     public class OrderConfigration : IEntityTypeConfiguration<Order>
     {
@@ -22,7 +22,7 @@ namespace CanddelsBackEnd.Config
             builder.HasOne(o => o.Payment)
                 .WithOne(o => o.Order)
                 .HasForeignKey<Payment>(o => o.OrderId);
-           
+
         }
     }
 }

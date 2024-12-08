@@ -2,10 +2,9 @@
 
 namespace CanddelsBackEnd.Models
 {
-    public class OrderItem
+    public class OrderItem:BaseEntity
     {
      
-        public int Id { get; set; }
         public int OrderId { get; set; }
         public int productVariantId { get; set; }
         public int Quantity { get; set; }

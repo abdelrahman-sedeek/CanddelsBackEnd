@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
 
-namespace CanddelsBackEnd.Config
+namespace CanddelsBackEnd.Infastrcuture.Config
 {
     public class OrderItemsCpnfigration : IEntityTypeConfiguration<OrderItem>
     {
@@ -11,7 +11,7 @@ namespace CanddelsBackEnd.Config
         {
             builder.Property(oi => oi.Total)
                    .HasPrecision(18, 2);
-           
+
             // Order and OrderItems (One-to-Many)
             builder.HasOne(oi => oi.Order)
                 .WithMany(o => o.OrderItems)
@@ -19,7 +19,7 @@ namespace CanddelsBackEnd.Config
 
 
             builder.HasOne(oi => oi.productVariant)
-                .WithOne(oi=>oi.OrderItem)
+                .WithOne(oi => oi.OrderItem)
                 .HasForeignKey<ProductVariant>(oi => oi.OrderItemId);
 
 
