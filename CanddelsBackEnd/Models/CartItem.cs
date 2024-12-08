@@ -2,7 +2,7 @@
 
 namespace CanddelsBackEnd.Models
 {
-    public class CartItem:BaseEntity
+    public class CartItem : BaseEntity
     {
       
         public int CartId { get; set; }

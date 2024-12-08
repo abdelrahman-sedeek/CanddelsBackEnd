@@ -1,6 +1,6 @@
 ﻿namespace CanddelsBackEnd.Models
 {
-    public class Category:BaseEntity
+    public class Category : BaseEntity
     {
 
         public string Name { get; set; }

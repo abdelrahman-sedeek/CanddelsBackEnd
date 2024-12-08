@@ -1,6 +1,6 @@
 ﻿namespace CanddelsBackEnd.Models
 {
-    public class Payment:BaseEntity
+    public class Payment : BaseEntity
     {
         public int OrderId { get; set; }
         public string PaymentMethod { get; set; } //enum

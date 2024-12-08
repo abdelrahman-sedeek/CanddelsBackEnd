@@ -1,6 +1,7 @@
 ﻿namespace CanddelsBackEnd.Models
 {
-    public class Order:BaseEntity
+    public class Order : BaseEntity
+
     {
         public DateTime OrderDate { get; set; }
         public decimal SubTotal { get; set; }
