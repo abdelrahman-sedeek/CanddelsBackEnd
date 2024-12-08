@@ -298,14 +298,39 @@
         "ProductId": 9
        
     },
-    {
-        "Barcode": 6225000618831,
-        "Weight": 100,
-        "Price": 250,
-        "StockQuantity": 20,
-        "ProductId": 9
-       
-    }
+  {
+    "Barcode": 6225000618831,
+    "Weight": 100,
+    "Price": 250,
+    "StockQuantity": 20,
+    "ProductId": 9
+
+  },
+  {
+    "Barcode": 6225000618831,
+    "Weight": 100,
+    "Price": 250,
+    "StockQuantity": 20,
+    "ProductId": 10
+
+  },
+  {
+    "Barcode": 6225000618831,
+    "Weight": 100,
+    "Price": 100,
+    "StockQuantity": 20,
+    "ProductId": 11
+
+  },
+
+  {
+    "Barcode": 6225000618831,
+    "Weight": 100,
+    "Price": 50,
+    "StockQuantity": 20,
+    "ProductId": 12
+
+  }
     
     
     
