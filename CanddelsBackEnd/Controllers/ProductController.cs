@@ -29,12 +29,14 @@ namespace CanddelsBackEnd.Controllers
             return Ok(productsToReturn);
         }
 
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> Getproduct(int id)
+        public async Task<ActionResult<ProductToReturnByIdDto>> Getproduct(int id)
         {
             var spec = new ProductSpesification(id);
             var product= await _productRepo.GetByIdWithSpecAsync(spec);
-            return Ok(product);
+            var productToReturn=_mapper.Map<Product, ProductToReturnByIdDto>(product);
+            return Ok(productToReturn);
         }
     }
 }
