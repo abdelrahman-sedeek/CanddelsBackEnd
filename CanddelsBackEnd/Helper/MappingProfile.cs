@@ -9,21 +9,25 @@ namespace CanddelsBackEnd.Helper
         public MappingProfile()
         {
             CreateMap<ProductVariant, ProductVariantDto>();
+          
             CreateMap<Product, ProductToReturnDto>()
-                .ForMember(dest => dest.HighestPrice,
-                    opt => opt.MapFrom(src =>
-                        src.productVariants != null && src.productVariants.Any() && src.productVariants.Count() > 1
-                            ? src.productVariants.Max(v => v.Price)
-                            : (decimal?)null))
-                .ForMember(dest => dest.LowestPrice,
-                    opt => opt.MapFrom(src =>
-                        src.productVariants != null && src.productVariants.Any()
-                            ? src.productVariants.Min(v => v.Price)
-                            : (decimal?)null));
-                  
- 
+                .ForMember(dest => dest.HighestPrice, opt => opt.MapFrom(src => GetHighestPrice(src.productVariants)))
+                .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPrice(src.productVariants)));
 
-
+            CreateMap<Product, ProductToReturnByIdDto>()
+                .ForMember(dest => dest.HighestPrice, opt => opt.MapFrom(src => GetHighestPrice(src.productVariants)))
+                .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPrice(src.productVariants)));
+       
+            CreateMap<Category, CategoryToReturnDto>();
         }
+        private decimal? GetHighestPrice(IEnumerable<ProductVariant> variants) =>
+                variants != null && variants.Any() && variants.Count() > 1
+                    ? variants.Max(v => v.Price)
+                    : (decimal?)null;
+        private decimal? GetLowestPrice(IEnumerable<ProductVariant> variants) =>
+            variants != null && variants.Any()
+                ? variants.Min(v => v.Price)
+                : (decimal?)null;
+       
     }
 }
