@@ -26,7 +26,8 @@ namespace CanddelsBackEnd.Controllers
         {
             var spec = new ProductSpesification();
             var categories = await _categoryRepo.GetAllAsync();
-            var categoriesToReturn = _mapper.Map<List<Category>, List<CategoryToReturnDto>>(categories);
+            var topCategories = categories.Take(4).ToList();
+            var categoriesToReturn = _mapper.Map<List<Category>, List<CategoryToReturnDto>>(topCategories);
 
             return Ok(categoriesToReturn);
         }

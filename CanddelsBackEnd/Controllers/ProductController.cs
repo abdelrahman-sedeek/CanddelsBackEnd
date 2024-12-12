@@ -28,6 +28,24 @@ namespace CanddelsBackEnd.Controllers
 
             return Ok(productsToReturn);
         }
+        [HttpGet("porducts/DailyOffers")]
+        public async Task<ActionResult<List<ProductToReturnDto>>> GetDailyOfferproducts()
+        {
+            var spec = new GetDailyofferSpecification(true);
+            var products = await _productRepo.GetAllWithSpecAsync(spec);
+            var productsToReturn = _mapper.Map<List<Product>, List<ProductToReturnDto>>(products);
+
+            return Ok(productsToReturn);
+        }
+        [HttpGet("porducts/BestSellers")]
+        public async Task<ActionResult<List<ProductToReturnDto>>> GetBestSellerproducts()
+        {
+            var spec = new ProductSpesification(true);
+            var products = await _productRepo.GetAllWithSpecAsync(spec);
+            var productsToReturn = _mapper.Map<List<Product>, List<ProductToReturnDto>>(products);
+
+            return Ok(productsToReturn);
+        }
 
 
         [HttpGet("{id}")]

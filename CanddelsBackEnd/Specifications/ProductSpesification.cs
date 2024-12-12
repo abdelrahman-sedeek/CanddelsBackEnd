@@ -14,5 +14,11 @@ namespace CanddelsBackEnd.Specifications
             AddInclude(X => X.productVariants);
             AddInclude(X => X.Category);
         }
+        public ProductSpesification(bool IsBestSeller) :base(x=>x.IsBestSeller== IsBestSeller)
+        {
+            AddInclude(X => X.productVariants);
+            AddInclude(X => X.Category);
+        }
+    
     }
 }

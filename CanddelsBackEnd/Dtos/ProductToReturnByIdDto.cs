@@ -12,6 +12,7 @@ namespace CanddelsBackEnd.Dtos
         public string? Benfits { get; set; }
         public string? Scent { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsDailyOffer { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
