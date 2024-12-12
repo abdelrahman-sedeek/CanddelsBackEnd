@@ -6,12 +6,13 @@
     "Benfits": "Bring the feeling of the ocean to your home Promote a sense of relaxation and well-being Eliminate unpleasant smells Create a more inviting and comfortable space Makeagreat gift for yourself or a loved one",
     "Features": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
     "CalltoAction": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
-    "IsBestSeller": false,
+    "IsBestSeller": true,
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 1,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": true
   },
   {
     "Name": "red splendor",
@@ -25,7 +26,8 @@
     "ProductVariantId": null,
     "CategoryId": 2,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": false
   },
   {
     "Name": "eden",
@@ -39,7 +41,8 @@
     "ProductVariantId": null,
     "CategoryId": 3,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": true
   },
   {
     "Name": "burgendy amour",
@@ -48,12 +51,13 @@
     "Benfits": "Bring the feeling of the ocean to your home Promote a sense of relaxation and well-being Eliminate unpleasant smells Create a more inviting and comfortable space Makeagreat gift for yourself or a loved one",
     "Features": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
     "CalltoAction": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
-    "IsBestSeller": false,
+    "IsBestSeller": true,
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 4,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": false
   },
   {
     "Name": "waves",
@@ -67,7 +71,8 @@
     "ProductVariantId": null,
     "CategoryId": 5,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": true
   },
   {
     "Name": "marble",
@@ -81,9 +86,9 @@
     "ProductVariantId": null,
     "CategoryId": 6,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": false
   },
-
   {
     "Name": "coffee",
     "Scent": "coffee vanilla",
@@ -91,12 +96,13 @@
     "Benfits": "Bring the feeling of the ocean to your home Promote a sense of relaxation and well-being Eliminate unpleasant smells Create a more inviting and comfortable space Makeagreat gift for yourself or a loved one",
     "Features": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
     "CalltoAction": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
-    "IsBestSeller": false,
+    "IsBestSeller": true,
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 7,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": true
   },
   {
     "Name": "christmas",
@@ -110,7 +116,8 @@
     "ProductVariantId": null,
     "CategoryId": 8,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": false
   },
   {
     "Name": "yellow",
@@ -124,7 +131,8 @@
     "ProductVariantId": null,
     "CategoryId": 9,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": false
   },
   {
     "Name": "blue",
@@ -133,12 +141,13 @@
     "Benfits": "Bring the feeling of the ocean to your home Promote a sense of relaxation and well-being Eliminate unpleasant smells Create a more inviting and comfortable space Makeagreat gift for yourself or a loved one",
     "Features": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
     "CalltoAction": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
-    "IsBestSeller": false,
+    "IsBestSeller": true,
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 10,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": false
   },
   {
     "Name": "red",
@@ -152,7 +161,8 @@
     "ProductVariantId": null,
     "CategoryId": 11,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": false
   },
   {
     "Name": "yellow",
@@ -161,13 +171,12 @@
     "Benfits": "Bring the feeling of the ocean to your home Promote a sense of relaxation and well-being Eliminate unpleasant smells Create a more inviting and comfortable space Makeagreat gift for yourself or a loved one",
     "Features": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
     "CalltoAction": "Madewith high-quality soy wax and essential oils Features refreshing and invigorating scents Burns for up to 45 hours Clean, smokeless burn Veganandcruelty-free",
-    "IsBestSeller": false,
+    "IsBestSeller": true,
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 12,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1"
+    "ImageUrl": "wwwroot/images/img1",
+    "IsDailyOffer": false
   }
-
-
 ]

@@ -18,7 +18,10 @@ namespace CanddelsBackEnd.Models
         public bool IsBestSeller{ get; set; }
 
         [DefaultValue(false)]
-        public bool IsDeleted {  get; set; }
+        public bool IsDeleted {  get; set; } 
+        
+        [DefaultValue(false)]
+        public bool IsDailyOffer {  get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

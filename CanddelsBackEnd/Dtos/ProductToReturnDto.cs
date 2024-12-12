@@ -10,6 +10,8 @@ namespace CanddelsBackEnd.Dtos
         public string? Scent { get; set; }     
         public bool IsBestSeller { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsDailyOffer { get; set; }
+
         public string ImageUrl { get; set; }
         //public virtual ICollection<ProductVariantDto> productVariants { get; set; } = new List<ProductVariantDto>();
 
