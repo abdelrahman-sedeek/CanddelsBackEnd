@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CanddelsBackEnd.Dtos;
+using CanddelsBackEnd.Helper;
 using CanddelsBackEnd.Models;
 using CanddelsBackEnd.Repositories.GenericRepo;
 using CanddelsBackEnd.Specifications;
@@ -20,14 +21,27 @@ namespace CanddelsBackEnd.Controllers
             _mapper = mapper;
         } 
         [HttpGet]
-        public async Task<ActionResult<List<ProductToReturnDto>>> Getproducts()
+        public async Task<ActionResult<List<ProductToReturnDto>>> Getproducts(
+            [FromQuery] ProductParameters ProductPrams)
         {
-            var spec = new ProductSpesification();
+            var spec = new ProductSpesification(ProductPrams);
             var products = await _productRepo.GetAllWithSpecAsync(spec);
+         
             var productsToReturn = _mapper.Map<List<Product>, List<ProductToReturnDto>>(products);
 
             return Ok(productsToReturn);
         }
+        //[HttpGet("homeProducts")]
+        //public async Task<ActionResult<List<ProductToReturnDto>>> GetHomeproducts()
+        //{
+        //    var spec = new ProductSpesification();
+        //    var products = await _productRepo.GetAllWithSpecAsync(spec);
+        //    var topProducts = products.Take(6).ToList();
+        //    var productsToReturn = _mapper.Map<List<Product>, List<ProductToReturnDto>>(topProducts);
+
+        //    return Ok(productsToReturn);
+        //}
+       
         [HttpGet("porducts/DailyOffers")]
         public async Task<ActionResult<List<ProductToReturnDto>>> GetDailyOfferproducts()
         {
