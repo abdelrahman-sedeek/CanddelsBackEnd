@@ -1,12 +1,9 @@
 using CanddelsBackEnd.Contexts;
-using CanddelsBackEnd.Helper;
 using CanddelsBackEnd.Models;
-using CanddelsBackEnd.Repositories;
 using CanddelsBackEnd.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CanddelsBackEnd.Infastrcuture;
@@ -85,9 +82,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseAuthorization();
-
+app.UseCors("CorsPolicy");
 app.MapControllers();
 var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

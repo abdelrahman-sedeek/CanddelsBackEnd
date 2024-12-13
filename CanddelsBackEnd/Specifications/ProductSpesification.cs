@@ -15,12 +15,18 @@ namespace CanddelsBackEnd.Specifications
         {
             AddInclude(X => X.productVariants);
             AddInclude(X =>X.Category);
+
             ApplyPaging(ProductPrams.PageSize * (ProductPrams.PageIndex - 1), ProductPrams.PageSize);
+
+            AddInclude(x => x.Discount);
+
         }
         public ProductSpesification(int id):base(x=>x.Id==id)
         {
             AddInclude(X => X.productVariants);
             AddInclude(X => X.Category);
+            AddInclude(X => X.Discount);
+
         }
         public ProductSpesification(bool IsBestSeller) :base(x=>x.IsBestSeller== IsBestSeller)
         {
