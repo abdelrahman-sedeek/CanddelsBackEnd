@@ -1,14 +1,25 @@
-﻿using CanddelsBackEnd.Models;
+﻿using CanddelsBackEnd.Dtos;
+using CanddelsBackEnd.Helper;
+using CanddelsBackEnd.Models;
 
 namespace CanddelsBackEnd.Specifications
 {
     public class ProductSpesification : BaseSpecification<Product>
     {
-        public ProductSpesification()
+        //public ProductSpesification()
+        //{
+        //    AddInclude(X => X.productVariants);
+        //    AddInclude(X => X.Category);
+        //}
+        public ProductSpesification(ProductParameters ProductPrams)
         {
             AddInclude(X => X.productVariants);
             AddInclude(X =>X.Category);
+
+            ApplyPaging(ProductPrams.PageSize * (ProductPrams.PageIndex - 1), ProductPrams.PageSize);
+
             AddInclude(x => x.Discount);
+
         }
         public ProductSpesification(int id):base(x=>x.Id==id)
         {
