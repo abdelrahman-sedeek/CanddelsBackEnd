@@ -6,6 +6,7 @@ namespace CanddelsBackEnd.Repositories.PorductRepo
     {
         Task<Product> GetProductByidAsync(int id);
         Task<IReadOnlyList<Product>> GetProductsAsync();
+        Task<IReadOnlyList<string>> GetScentsAsync();
 
     }
 }

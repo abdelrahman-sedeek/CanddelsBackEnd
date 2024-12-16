@@ -9,6 +9,8 @@ namespace CanddelsBackEnd.Specifications
         int Skip { get; }
         int Take { get; }
         bool IsPagingEnabled { get; }
+       
+
 
 
     }

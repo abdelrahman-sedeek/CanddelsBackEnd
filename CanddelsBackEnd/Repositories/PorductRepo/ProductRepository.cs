@@ -14,18 +14,21 @@ namespace CanddelsBackEnd.Repositories.PorductRepo
         {
             _context = context;
         }
-        [HttpGet("{id}")]
-
         public async Task<Product> GetProductByidAsync(int id)
         {
             return await _context.Products.Include(pv => pv.productVariants).
-                Include(c=>c.Category).
+                Include(c => c.Category).
                 FirstOrDefaultAsync();
         }
 
         public Task<IReadOnlyList<Product>> GetProductsAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<IReadOnlyList<string>> GetScentsAsync()
+        {
+            return await _context.Products.Select(p => p.Scent).Distinct().ToListAsync();
         }
     }
 }

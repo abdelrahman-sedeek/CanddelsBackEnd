@@ -10,6 +10,9 @@ namespace CanddelsBackEnd.Specifications
         public int Skip { get; private set; }
         public int Take { get; private set; }
         public bool IsPagingEnabled { get; private set; }
+
+        public bool IsDistinct { get; private set; }
+
         public BaseSpecification()
         {
         }
@@ -19,15 +22,19 @@ namespace CanddelsBackEnd.Specifications
             Criteria = criteria;
         }
 
+       
+       
         protected void AddInclude(Expression<Func<T, object>> include)
         {
             Includes.Add(include);
         }
-        public void ApplyPaging(int skip, int take)
+        protected void ApplyPaging(int skip, int take)
         {
             Skip = skip;
             Take = take;
             IsPagingEnabled=true;
         }
+
+       
     }
 }

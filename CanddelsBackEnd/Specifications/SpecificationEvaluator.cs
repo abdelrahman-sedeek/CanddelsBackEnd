@@ -20,6 +20,7 @@ namespace CanddelsBackEnd.Specifications
             {
                 query = query.Skip(spec.Skip).Take(spec.Take);
             }
+            
             return query;
 
 
