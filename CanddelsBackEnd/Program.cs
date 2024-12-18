@@ -18,9 +18,10 @@ using Microsoft.Extensions.Logging;
 using AutoMapper;
 
 using System;
+using CanddelsBackEnd.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
+
 builder.Services.AddControllers();
 builder.Services.AddDbContext<CandelContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
@@ -28,6 +29,10 @@ builder.Services.Configure<AdminCredentials>(builder.Configuration.GetSection("A
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddScoped<AdminCredentialsSeeder>();
 builder.Services.AddScoped<AdminCredentialsManager>();
+
+builder.Services.AddScoped<CartHelper>();
+
+
 builder.Services.AddScoped<IPasswordHasher<AdminCredentials>, PasswordHasher<AdminCredentials>>();
 var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
 builder.Services.AddSingleton<JwtTokenService>();
