@@ -1,12 +1,9 @@
 using CanddelsBackEnd.Contexts;
-using CanddelsBackEnd.Helper;
 using CanddelsBackEnd.Models;
-using CanddelsBackEnd.Repositories;
 using CanddelsBackEnd.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CanddelsBackEnd.Infastrcuture;
@@ -16,26 +13,35 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
-
 using System;
 using CanddelsBackEnd.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
 builder.Services.AddDbContext<CandelContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+
 builder.Services.Configure<AdminCredentials>(builder.Configuration.GetSection("AdminCredentials"));
+
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+
 builder.Services.AddScoped<AdminCredentialsSeeder>();
+
 builder.Services.AddScoped<AdminCredentialsManager>();
+
 
 builder.Services.AddScoped<CartHelper>();
 
 
+
 builder.Services.AddScoped<IPasswordHasher<AdminCredentials>, PasswordHasher<AdminCredentials>>();
+
 var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
+
 builder.Services.AddSingleton<JwtTokenService>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
@@ -83,9 +89,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseAuthorization();
-
+app.UseCors("CorsPolicy");
 app.MapControllers();
 var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

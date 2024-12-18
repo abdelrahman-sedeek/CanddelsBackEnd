@@ -1,4 +1,5 @@
-﻿using CanddelsBackEnd.Helper;
+
+using CanddelsBackEnd.Helper;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,6 +45,11 @@ namespace CanddelsBackEnd.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
+
+
+namespace CanddelsBackEnd.Controllers
+{
+    public class CartController
 
     }
 }

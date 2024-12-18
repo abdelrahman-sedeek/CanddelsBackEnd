@@ -1,4 +1,7 @@
-﻿using CanddelsBackEnd.Models;
+﻿using CanddelsBackEnd.Dtos;
+using CanddelsBackEnd.Helper;
+using CanddelsBackEnd.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CanddelsBackEnd.Specifications
 {
@@ -7,12 +10,34 @@ namespace CanddelsBackEnd.Specifications
         public ProductSpesification()
         {
             AddInclude(X => X.productVariants);
+            AddInclude(X => X.Category);
+        }
+        public ProductSpesification(ProductParameters ProductPrams):
+            base(x=>
+            (!ProductPrams.CategoryIds.Any() || ProductPrams.CategoryIds.Contains(x.CategoryId)) &&
+            (!ProductPrams.Scents.Any()|| ProductPrams.Scents.Any(scent=>x.Scent.Contains(scent)))
+            )
+        {
+            AddInclude(X => X.productVariants);
             AddInclude(X =>X.Category);
+            AddInclude(x => x.Discount);
+
+            ApplyPaging(ProductPrams.PageSize * (ProductPrams.PageIndex - 1), ProductPrams.PageSize);
+ 
+
         }
         public ProductSpesification(int id):base(x=>x.Id==id)
+        {
+            AddInclude(X => X.productVariants.Where(v=>v.ProductId==id));
+            AddInclude(X => X.Category);
+            AddInclude(X => X.Discount);
+
+        }
+        public ProductSpesification(bool IsBestSeller) :base(x=>x.IsBestSeller== IsBestSeller)
         {
             AddInclude(X => X.productVariants);
             AddInclude(X => X.Category);
         }
+    
     }
 }

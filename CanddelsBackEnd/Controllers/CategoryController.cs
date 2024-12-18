@@ -24,8 +24,9 @@ namespace CanddelsBackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CategoryToReturnDto>>> GetCategories()
         {
-            var spec = new ProductSpesification();
+            var spec = new CategorySpecification();
             var categories = await _categoryRepo.GetAllAsync();
+
             var categoriesToReturn = _mapper.Map<List<Category>, List<CategoryToReturnDto>>(categories);
 
             return Ok(categoriesToReturn);

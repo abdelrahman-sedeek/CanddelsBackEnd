@@ -2,6 +2,7 @@
 using CanddelsBackEnd.Models;
 using CanddelsBackEnd.Specifications;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace CanddelsBackEnd.Repositories.GenericRepo
 {
@@ -12,6 +13,12 @@ namespace CanddelsBackEnd.Repositories.GenericRepo
         public GenericRepository(CandelContext context)
         {
             _context = context;
+        }
+
+        public async Task<int> CountAsync(Expression<Func<T, bool>> criteria)
+        {
+            return await _context.Set<T>().CountAsync(criteria);
+
         }
 
         public async Task<List<T>> GetAllAsync()
@@ -33,6 +40,8 @@ namespace CanddelsBackEnd.Repositories.GenericRepo
         {
             return await ApplySepecification(spec).FirstOrDefaultAsync();
         }
+
+       
         private IQueryable<T> ApplySepecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
