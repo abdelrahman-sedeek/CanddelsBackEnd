@@ -1,4 +1,4 @@
-﻿using CanddelsBackEnd.Models;
+using CanddelsBackEnd.Models;
 using System.ComponentModel;
 
 namespace CanddelsBackEnd.Dtos
@@ -15,16 +15,27 @@ namespace CanddelsBackEnd.Dtos
 
         public string ImageUrl { get; set; }
         //public virtual ICollection<ProductVariantDto> productVariants { get; set; } = new List<ProductVariantDto>();
+
+
         public int Stock { get; set; }
-        public decimal HighestPrice { get; set; }
-        public decimal LowestPrice { get; set; } 
-        public decimal HighestPriceAfterDiscount { get; set; }
-        public decimal LowestPriceAfterDiscount { get; set; }
+        public decimal? HighestPrice { get; set; }
+        public decimal? LowestPrice { get; set; } 
+        public decimal? HighestPriceAfterDiscount { get; set; }
+        public decimal? LowestPriceAfterDiscount { get; set; }
         //public int? DiscountId { get; set; }
         //public virtual Discount? Discount { get; set; }
 
+
+      
+        public int? DiscountId { get; set; }
+        public virtual Discount? Discount { get; set; }
+
+ 
+       
+
         public string CategoryName {  get; set; }
         public string CategoryId { get; set; }
+
 
 
     }

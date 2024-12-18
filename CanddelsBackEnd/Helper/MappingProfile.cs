@@ -10,12 +10,8 @@ namespace CanddelsBackEnd.Helper
         public MappingProfile()
         {
             CreateMap<ProductVariant, ProductVariantDto>();
+
           
-            CreateMap<Product, ProductToReturnDto>()
-                .ForMember(dest => dest.HighestPrice, opt => opt.MapFrom(src => GetHighestPrice(src.productVariants)))
-                .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPrice(src.productVariants)))
-                .ForMember(dest => dest.HighestPriceAfterDiscount, opt => opt.MapFrom<HighestPriceDiscountResolver>())
-                .ForMember(dest => dest.LowestPriceAfterDiscount, opt => opt.MapFrom<LowesPriceDiscountResolver>());
 
 
             CreateMap<Product, ProductToReturnByIdDto>()
