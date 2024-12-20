@@ -10,8 +10,15 @@ using CanddelsBackEnd.Repositories.GenericRepo;
 using CanddelsBackEnd.Repositories.PorductRepo;
 using CanddelsBackEnd.Dtos;
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using AutoMapper;
+using System;
+using CanddelsBackEnd.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<CandelContext>(options =>
@@ -24,6 +31,11 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddScoped<AdminCredentialsSeeder>();
 
 builder.Services.AddScoped<AdminCredentialsManager>();
+
+
+builder.Services.AddScoped<CartHelper>();
+
+
 
 builder.Services.AddScoped<IPasswordHasher<AdminCredentials>, PasswordHasher<AdminCredentials>>();
 
