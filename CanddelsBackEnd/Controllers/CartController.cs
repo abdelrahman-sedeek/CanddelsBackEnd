@@ -14,6 +14,9 @@ namespace CanddelsBackEnd.Controllers
     {
         private readonly CandelContext _candelContext;
 
+
+    
+
         public CartController(CandelContext candelContext)
         {
             _candelContext = candelContext;
@@ -41,7 +44,9 @@ namespace CanddelsBackEnd.Controllers
             {
                 cart = new Cart
                 {
-                    SessionId = sessionId
+                    SessionId = sessionId,
+                    CreatedAt = DateTime.UtcNow,
+                    ExpiresAt = DateTime.UtcNow.Add(Cart.ExpirationDuration)
                 };
                 await _candelContext.Carts.AddAsync(cart);
                 await _candelContext.SaveChangesAsync();
@@ -56,7 +61,9 @@ namespace CanddelsBackEnd.Controllers
                 Expires = DateTimeOffset.UtcNow.AddHours(2)
             });
 
-            return Ok(new { sessionId= sessionId });
+            return Ok(new { 
+                sessionId= sessionId,
+            });
         }
 
 
