@@ -11,10 +11,6 @@ namespace CanddelsBackEnd.Infastrcuture.Config
         {
             builder.Property(d => d.DiscountPercentage)
             .HasColumnType("decimal(5, 2)");
-
-            builder.Property(d => d.PriceAfterDiscount)
-            .HasColumnType("decimal(5, 2)");
-
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using CanddelsBackEnd.Models;
+﻿using CanddelsBackEnd.Dtos;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 

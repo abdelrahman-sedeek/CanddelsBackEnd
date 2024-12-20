@@ -16,6 +16,9 @@ namespace CanddelsBackEnd.Infastrcuture.Config
             builder.Property(pv => pv.Price)
                 .HasPrecision(18, 2);
 
+            builder.Property(pv => pv.PriceAfterDiscount)
+           .HasColumnType("decimal(5, 2)");
+
             // Product and ProductVariant (One-to-Many)
             builder
                 .HasOne(pv => pv.Product)
