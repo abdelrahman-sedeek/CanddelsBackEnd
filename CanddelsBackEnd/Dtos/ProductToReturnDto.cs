@@ -22,11 +22,7 @@ namespace CanddelsBackEnd.Dtos
 
 
         public int Stock { get; set; }
-        public decimal? HighestPrice { get; set; }
-        public decimal? LowestPrice { get; set; } 
-        public decimal? HighestPriceAfterDiscount { get; set; }
-        public decimal? LowestPriceAfterDiscount { get; set; }
-
+   
         public int? DiscountId { get; set; }
         public virtual Discount? Discount { get; set; }
 
