@@ -30,6 +30,12 @@ namespace CanddelsBackEnd.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SessionId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

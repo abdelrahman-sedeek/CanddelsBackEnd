@@ -34,6 +34,7 @@ builder.Services.AddScoped<AdminCredentialsManager>();
 
 
 builder.Services.AddScoped<CartHelper>();
+builder.Services.AddHostedService<CartCleanupService>();
 
 
 
