@@ -25,26 +25,5 @@ namespace CanddelsBackEnd.Helper
             }
         }
     }
-    class LowesPriceDiscountForProductDtoIdResolver : IValueResolver<Product, ProductToReturnByIdDto,decimal>
-    {
-        public  decimal Resolve(Product source, ProductToReturnByIdDto destination, decimal destMember, ResolutionContext context)
-        {
-            if(source.Discount is null && source.productVariants.Count > 1)
-            {
-                return source.productVariants.Min(pv=>pv.Price);
-            } 
-            else if(source.Discount is null && source.productVariants.Count== 1)
-            {
-                return source.productVariants.Min(pv=>pv.Price);
-            }
-            else if (source.Discount is not null && source.productVariants.Count == 1)
-            {
-                return source.productVariants.Min(pv => pv.Price) - (source.productVariants.Min(pv => pv.Price) * (source.Discount.DiscountPercentage / 100));
-            }
-            else
-            {
-                return source.productVariants.Min(pv => pv.Price) -( source.productVariants.Min(pv=>pv.Price)*(source.Discount.DiscountPercentage/100));
-            }
-        }
-    }
+   
 }

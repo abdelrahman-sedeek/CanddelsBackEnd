@@ -1,4 +1,4 @@
-﻿namespace CanddelsBackEnd.Models
+﻿namespace CanddelsBackEnd.Dtos
 {
     public class ChangePasswordRequest
     {

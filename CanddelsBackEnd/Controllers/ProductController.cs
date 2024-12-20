@@ -29,6 +29,8 @@ namespace CanddelsBackEnd.Controllers
         {
             var spec = new ProductSpesification(ProductPrams);
             var products = await _productRepo.GetAllWithSpecAsync(spec);
+
+            
          
             var productsToReturn = _mapper.Map<List<Product>, List<ProductToReturnDto>>(products);
 

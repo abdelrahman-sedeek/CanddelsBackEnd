@@ -1,5 +1,4 @@
 using CanddelsBackEnd.Contexts;
-using CanddelsBackEnd.Models;
 using CanddelsBackEnd.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -9,11 +8,8 @@ using System.Text;
 using CanddelsBackEnd.Infastrcuture;
 using CanddelsBackEnd.Repositories.GenericRepo;
 using CanddelsBackEnd.Repositories.PorductRepo;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using AutoMapper;
-using System;
+using CanddelsBackEnd.Dtos;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -53,7 +49,7 @@ builder.Services.AddAuthentication()
 builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200").AllowCredentials();
     })
 );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -81,6 +77,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCookiePolicy();
+app.UseRouting();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthorization();

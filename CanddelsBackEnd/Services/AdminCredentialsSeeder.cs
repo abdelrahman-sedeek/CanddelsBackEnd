@@ -1,5 +1,5 @@
-﻿using CanddelsBackEnd.Helper;
-using CanddelsBackEnd.Models;
+﻿using CanddelsBackEnd.Dtos;
+using CanddelsBackEnd.Helper;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
