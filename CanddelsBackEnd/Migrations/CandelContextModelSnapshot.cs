@@ -129,9 +129,6 @@ namespace CanddelsBackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -144,6 +141,8 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ShippingDetailId");
 
                     b.ToTable("Orders");
                 });
@@ -207,8 +206,7 @@ namespace CanddelsBackEnd.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Payments");
                 });
@@ -347,9 +345,6 @@ namespace CanddelsBackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -362,9 +357,6 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
 
                     b.ToTable("ShippingDetails");
                 });
@@ -388,6 +380,17 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("ProductVariant");
                 });
 
+            modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
+                {
+                    b.HasOne("CanddelsBackEnd.Models.ShippingDetail", "ShippingDetail")
+                        .WithMany()
+                        .HasForeignKey("ShippingDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ShippingDetail");
+                });
+
             modelBuilder.Entity("CanddelsBackEnd.Models.OrderItem", b =>
                 {
                     b.HasOne("CanddelsBackEnd.Models.Order", "Order")
@@ -402,8 +405,8 @@ namespace CanddelsBackEnd.Migrations
             modelBuilder.Entity("CanddelsBackEnd.Models.Payment", b =>
                 {
                     b.HasOne("CanddelsBackEnd.Models.Order", "Order")
-                        .WithOne("Payment")
-                        .HasForeignKey("CanddelsBackEnd.Models.Payment", "OrderId")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -442,17 +445,6 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("CanddelsBackEnd.Models.ShippingDetail", b =>
-                {
-                    b.HasOne("CanddelsBackEnd.Models.Order", "Order")
-                        .WithOne("ShippingDetail")
-                        .HasForeignKey("CanddelsBackEnd.Models.ShippingDetail", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("CanddelsBackEnd.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -466,12 +458,6 @@ namespace CanddelsBackEnd.Migrations
             modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-
-                    b.Navigation("Payment")
-                        .IsRequired();
-
-                    b.Navigation("ShippingDetail")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CanddelsBackEnd.Models.OrderItem", b =>
