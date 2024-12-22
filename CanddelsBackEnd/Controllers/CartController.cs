@@ -17,14 +17,12 @@ public class CartController : ControllerBase
         _cartService = cartService;
     }
 
-<<<<<<< Updated upstream
-        public CartController(CandelContext candelContext)
-=======
+
     [HttpGet("create-session")]
     public async Task<IActionResult> CreateSession()
     {
         if (Request.Cookies.TryGetValue("SessionId", out var existingSessionId))
->>>>>>> Stashed changes
+
         {
             var Getcart = await _cartService.GetCartBySessionIdAsync(existingSessionId);
             if (Getcart != null)
@@ -65,12 +63,13 @@ public class CartController : ControllerBase
         return Ok(new { message = result });
     }
 
-<<<<<<< Updated upstream
             if(cart is null)
             {
                 cart = new Cart
                 {
-                    SessionId = sessionId
+                    SessionId = sessionId,
+                    CreatedAt = DateTime.UtcNow,
+                    ExpiresAt = DateTime.UtcNow.Add(Cart.ExpirationDuration)
                 };
                 await _candelContext.Carts.AddAsync(cart);
                 await _candelContext.SaveChangesAsync();
@@ -85,15 +84,61 @@ public class CartController : ControllerBase
                 Expires = DateTimeOffset.UtcNow.AddHours(2)
             });
 
+
             return Ok(new { sessionId= sessionId });
-=======
+
     [HttpGet("view")]
     public async Task<IActionResult> ViewCart()
     {
         if (!Request.Headers.TryGetValue("SessionId", out var sessionIdValues))
+
+            return Ok(new { 
+                sessionId= sessionId,
+            });
+        }
+
+
+        [HttpPost("add")]
+        public async Task<IActionResult> AddToCart([FromBody] AddToCartRequest addToCartRequest)
+        {
+            var cart = await _candelContext.Carts.Include(c=>c.CartItems).SingleOrDefaultAsync(c=>c.SessionId == addToCartRequest.SessionId);
+
+            if(cart is null)
+            {   
+                cart = new Cart { SessionId = addToCartRequest.SessionId };
+                _candelContext.Carts.Add(cart);
+                await _candelContext.SaveChangesAsync();
+            }
+
+            var cartItem =  cart.CartItems
+                .SingleOrDefault(ci => ci.ProductVariantId == addToCartRequest.ProductVariantId);
+
+            if(cartItem is not null)
+            {
+                cartItem.Quantity += addToCartRequest.Quantity;
+            }
+            else
+            {
+                cart.CartItems.Add(new CartItem
+                {
+                    ProductVariantId = addToCartRequest.ProductVariantId,
+                    Quantity = addToCartRequest.Quantity,
+                    CartId = cart.Id
+                });
+            }
+
+            await _candelContext.SaveChangesAsync();
+
+            return Ok(new { message = "Product added to cart successfully" });
+
+        }
+
+        [HttpDelete("remove")]
+        public async Task<IActionResult> RemoveFromCart([FromBody] RemoveFromCartRequest removeFromCartRequest)
+
         {
             return BadRequest(new { message = "SessionId is missing" });
->>>>>>> Stashed changes
+
         }
 
         var sessionId = sessionIdValues.ToString();

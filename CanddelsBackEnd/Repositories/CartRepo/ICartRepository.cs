@@ -1,4 +1,5 @@
-﻿using CanddelsBackEnd.Models;
+
+using CanddelsBackEnd.Models;
 
 namespace CanddelsBackEnd.Repositories.CartRepo
 {
@@ -10,5 +11,8 @@ namespace CanddelsBackEnd.Repositories.CartRepo
         void RemoveCart(Cart cart);
         void RemoveCartItems(ICollection<CartItem> cartItems);
         Task<Cart> GetCartWithItemsAsync(int cartId);
+
+
+
     }
 }
