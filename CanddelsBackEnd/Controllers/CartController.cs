@@ -1,48 +1,77 @@
-using CanddelsBackEnd.Contexts;
+using Azure.Core;
+using Azure;
 using CanddelsBackEnd.Dtos;
-using CanddelsBackEnd.Models;
+using CanddelsBackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Security.Cryptography;
 
-namespace CanddelsBackEnd.Controllers
+[ApiController]
+[Route("api/cart")]
+
+public class CartController : ControllerBase
 {
+    private readonly CartService _cartService;
 
-    [ApiController]
-    [Route("api/cart")]
-    public class CartController : ControllerBase
+    public CartController(CartService cartService)
     {
-        private readonly CandelContext _candelContext;
+        _cartService = cartService;
+    }
 
-        public CartController(CandelContext candelContext)
+
+    [HttpGet("create-session")]
+    public async Task<IActionResult> CreateSession()
+    {
+        if (Request.Cookies.TryGetValue("SessionId", out var existingSessionId))
+
         {
-            _candelContext = candelContext;
+            var Getcart = await _cartService.GetCartBySessionIdAsync(existingSessionId);
+            if (Getcart != null)
+            {
+                return Ok(new { sessionId = existingSessionId });
+            }
         }
 
-        [HttpGet("create-session")]
-        public async Task<IActionResult> CreateSession()
+        var sessionId = GenerateSecureSessionId();
+        var cart = await _cartService.GetOrCreateCartAsync(sessionId);
+
+        Response.Cookies.Append("SessionId", sessionId, new CookieOptions
         {
+            HttpOnly = false,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = DateTimeOffset.UtcNow.AddHours(2)
+        });
 
-            if(Request.Cookies.TryGetValue("SessionId",out string existingSessionId))
-            {
-                var existingCart = await _candelContext.Carts.SingleOrDefaultAsync(c=>c.SessionId == existingSessionId);
-                if (existingCart != null)
-                {
-                    return Ok(existingSessionId);
-                }
-            }
+        return Ok(new { sessionId });
+    }
 
-            var sessionId = GenerateSecureSessionId();
+    [HttpPost("add")]
+    public async Task<IActionResult> AddToCart([FromBody] AddToCartRequest addToCartRequest)
+    {
+        var result = await _cartService.AddToCartAsync(addToCartRequest);
+        return Ok(new { message = result });
+    }
 
-            var cart = await _candelContext.Carts
-                .SingleOrDefaultAsync(c => c.SessionId == sessionId);
+    [HttpDelete("remove")]
+    public async Task<IActionResult> RemoveFromCart([FromBody] RemoveFromCartRequest removeFromCartRequest)
+    {
+        var result = await _cartService.RemoveFromCartAsync(removeFromCartRequest);
+        if (result == null)
+        {
+            return NotFound("Cart or item not found");
+        }
+        return Ok(new { message = result });
+    }
 
             if(cart is null)
             {
                 cart = new Cart
                 {
-                    SessionId = sessionId
+                    SessionId = sessionId,
+                    CreatedAt = DateTime.UtcNow,
+                    ExpiresAt = DateTime.UtcNow.Add(Cart.ExpirationDuration)
                 };
                 await _candelContext.Carts.AddAsync(cart);
                 await _candelContext.SaveChangesAsync();
@@ -57,7 +86,17 @@ namespace CanddelsBackEnd.Controllers
                 Expires = DateTimeOffset.UtcNow.AddHours(2)
             });
 
+
             return Ok(new { sessionId= sessionId });
+
+    [HttpGet("view")]
+    public async Task<IActionResult> ViewCart()
+    {
+        if (!Request.Headers.TryGetValue("SessionId", out var sessionIdValues))
+
+            return Ok(new { 
+                sessionId= sessionId,
+            });
         }
 
 
@@ -98,28 +137,6 @@ namespace CanddelsBackEnd.Controllers
 
         [HttpDelete("remove")]
         public async Task<IActionResult> RemoveFromCart([FromBody] RemoveFromCartRequest removeFromCartRequest)
-        {
-            var cart = await _candelContext.Carts.Include(c=>c.CartItems)
-                .SingleOrDefaultAsync(c=>c.SessionId==removeFromCartRequest.SessionId);
-            if(cart is null)
-            {
-                return NotFound("Cart not found");
-            }
-
-            var cartItem = cart.CartItems
-                .SingleOrDefault(ci=>ci.ProductVariantId==removeFromCartRequest.ProductVariantId);
-
-            if(cartItem is not null)
-            {
-                cart.CartItems.Remove(cartItem);
-                await _candelContext.SaveChangesAsync();
-            }
-
-            return Ok(new
-            {
-                message = "Product removed from cart"
-            });
-        }
 
 
         [HttpPut("update-quantity")]
@@ -146,6 +163,7 @@ namespace CanddelsBackEnd.Controllers
         [HttpGet("view")]
         public async Task<IActionResult> ViewCart()
         {
+            return BadRequest(new { message = "SessionId is missing" });
 
             if(!Request.Headers.TryGetValue("SessionId", out var sessionIdValues))
             {
@@ -193,15 +211,22 @@ namespace CanddelsBackEnd.Controllers
                     
                 };
             });
-
-            return Ok(cartItems);
         }
-        
-        private string GenerateSecureSessionId()
+
+        var sessionId = sessionIdValues.ToString();
+        var cartItems = await _cartService.ViewCartAsync(sessionId);
+
+        if (cartItems == null || !cartItems.Any())
         {
-            return Guid.NewGuid().ToString("N") + "-" + RandomNumberGenerator.GetInt32(1000, 10000);
+            return Ok(new { message = "Cart is empty" });
         }
 
+        return Ok(cartItems);
+    }
 
+    private string GenerateSecureSessionId()
+    {
+        return Guid.NewGuid().ToString("N") + "-" + RandomNumberGenerator.GetInt32(1000, 10000);
     }
 }
+

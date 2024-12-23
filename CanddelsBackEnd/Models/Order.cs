@@ -11,7 +11,7 @@
         public int ShippingDetailId { get; set; }
         public virtual ShippingDetail ShippingDetail { get; set; }
 
-        public int PaymentId { get; set; }
-        public virtual Payment Payment { get; set; }
+        //public int PaymentId { get; set; }
+        //public virtual Payment Payment { get; set; }
     }
 }

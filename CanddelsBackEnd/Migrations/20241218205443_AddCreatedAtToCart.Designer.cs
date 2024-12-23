@@ -4,6 +4,7 @@ using CanddelsBackEnd.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,10 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CanddelsBackEnd.Migrations
 {
     [DbContext(typeof(CandelContext))]
-    partial class CandelContextModelSnapshot : ModelSnapshot
+    [Migration("20241218205443_AddCreatedAtToCart")]
+    partial class AddCreatedAtToCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
+#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
@@ -111,6 +115,9 @@ namespace CanddelsBackEnd.Migrations
                     b.Property<bool?>("IsDiscounted")
                         .HasColumnType("bit");
 
+                    b.Property<decimal?>("PriceAfterDiscount")
+                        .HasColumnType("decimal(5, 2)");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -130,25 +137,25 @@ namespace CanddelsBackEnd.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("SessionId")
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ShippingDetailId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("SubTotal")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ShippingDetailId");
 
                     b.ToTable("Orders");
                 });
@@ -212,7 +219,8 @@ namespace CanddelsBackEnd.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderId")
+                        .IsUnique();
 
                     b.ToTable("Payments");
                 });
@@ -300,9 +308,6 @@ namespace CanddelsBackEnd.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("PriceAfterDiscount")
-                        .HasColumnType("decimal(5, 2)");
-
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
@@ -351,6 +356,9 @@ namespace CanddelsBackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -363,6 +371,9 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
 
                     b.ToTable("ShippingDetails");
                 });
@@ -386,17 +397,6 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("ProductVariant");
                 });
 
-            modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
-                {
-                    b.HasOne("CanddelsBackEnd.Models.ShippingDetail", "ShippingDetail")
-                        .WithMany()
-                        .HasForeignKey("ShippingDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ShippingDetail");
-                });
-
             modelBuilder.Entity("CanddelsBackEnd.Models.OrderItem", b =>
                 {
                     b.HasOne("CanddelsBackEnd.Models.Order", "Order")
@@ -411,8 +411,8 @@ namespace CanddelsBackEnd.Migrations
             modelBuilder.Entity("CanddelsBackEnd.Models.Payment", b =>
                 {
                     b.HasOne("CanddelsBackEnd.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
+                        .WithOne("Payment")
+                        .HasForeignKey("CanddelsBackEnd.Models.Payment", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -451,6 +451,17 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("CanddelsBackEnd.Models.ShippingDetail", b =>
+                {
+                    b.HasOne("CanddelsBackEnd.Models.Order", "Order")
+                        .WithOne("ShippingDetail")
+                        .HasForeignKey("CanddelsBackEnd.Models.ShippingDetail", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("CanddelsBackEnd.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -464,6 +475,9 @@ namespace CanddelsBackEnd.Migrations
             modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
+
+                    b.Navigation("Payment")
+                        .IsRequired();
 
                     b.Navigation("ShippingDetail")
                         .IsRequired();
@@ -484,6 +498,7 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("CartItem")
                         .IsRequired();
                 });
+#pragma warning restore 612, 618
         }
     }
 }

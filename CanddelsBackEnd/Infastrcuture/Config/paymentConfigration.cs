@@ -12,9 +12,7 @@ namespace CanddelsBackEnd.Infastrcuture.Config
             builder.Property(p => p.TotalPrice)
            .HasPrecision(18, 2);
             // Order and Payment (One-to-One)
-            builder.HasOne(p => p.Order)
-                   .WithOne(o => o.Payment)
-                   .HasForeignKey<Payment>(p => p.OrderId);
+          
 
         }
     }
