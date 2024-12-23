@@ -4,6 +4,7 @@ using CanddelsBackEnd.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,10 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CanddelsBackEnd.Migrations
 {
     [DbContext(typeof(CandelContext))]
-    partial class CandelContextModelSnapshot : ModelSnapshot
+    [Migration("20241222175726_updateOrder")]
+    partial class updateOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
+#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
@@ -138,7 +142,6 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
-                    b.Property<string>("PaymentStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -147,8 +150,6 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ShippingDetailId");
 
                     b.ToTable("Orders");
                 });
@@ -351,6 +352,9 @@ namespace CanddelsBackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -363,6 +367,9 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
 
                     b.ToTable("ShippingDetails");
                 });
@@ -384,17 +391,6 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("ProductVariant");
-                });
-
-            modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
-                {
-                    b.HasOne("CanddelsBackEnd.Models.ShippingDetail", "ShippingDetail")
-                        .WithMany()
-                        .HasForeignKey("ShippingDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ShippingDetail");
                 });
 
             modelBuilder.Entity("CanddelsBackEnd.Models.OrderItem", b =>
@@ -451,6 +447,17 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("CanddelsBackEnd.Models.ShippingDetail", b =>
+                {
+                    b.HasOne("CanddelsBackEnd.Models.Order", "Order")
+                        .WithOne("ShippingDetail")
+                        .HasForeignKey("CanddelsBackEnd.Models.ShippingDetail", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("CanddelsBackEnd.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -484,6 +491,7 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("CartItem")
                         .IsRequired();
                 });
+#pragma warning restore 612, 618
         }
     }
 }
