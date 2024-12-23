@@ -137,7 +137,7 @@ namespace CanddelsBackEnd.Migrations
                     b.Property<int>("ShippingDetailId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("Status");
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
