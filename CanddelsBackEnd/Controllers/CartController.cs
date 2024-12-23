@@ -3,6 +3,7 @@ using CanddelsBackEnd.Dtos;
 using CanddelsBackEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.Security.Cryptography;
 
 namespace CanddelsBackEnd.Controllers
@@ -120,6 +121,28 @@ namespace CanddelsBackEnd.Controllers
             });
         }
 
+
+        [HttpPut("update-quantity")]
+        public async Task<IActionResult> UpdateQuantity([FromBody] UpdateCartQuantityDto updateCartQuantityDto)
+        {
+            var cart = await _candelContext.Carts
+                .Include(c => c.CartItems)
+                .SingleOrDefaultAsync(c => c.SessionId == updateCartQuantityDto.SessionId);
+
+            var cartItem = cart?.CartItems.SingleOrDefault(ci => ci.ProductVariantId == updateCartQuantityDto.ProductVariantId);
+
+            if (cartItem == null)
+            {
+                return NotFound("Cart item not found");
+            }
+
+            cartItem.Quantity =updateCartQuantityDto.Quantity;
+            await _candelContext.SaveChangesAsync();
+
+            return Ok("Quantity updated successfully");
+
+        }
+
         [HttpGet("view")]
         public async Task<IActionResult> ViewCart()
         {
@@ -143,9 +166,9 @@ namespace CanddelsBackEnd.Controllers
 
             if(cart is null || !cart.CartItems.Any())
             {
-                return Ok(new
+                return NotFound(new
                 {
-                    message = "Cart is Empty"
+                    message = "Your cart is empty"
                 });
             }
 
@@ -157,8 +180,10 @@ namespace CanddelsBackEnd.Controllers
 
                 return new
                 {
+                    ci.CartId,
                     ci.ProductVariantId,
                     name = ci.ProductVariant.Product.Name,
+                    weight = ci.ProductVariant.Weight,
                     ci.ProductVariant.Product.ImageUrl,
                     ci.ProductVariant.Product.Scent,
                     ci.Quantity,

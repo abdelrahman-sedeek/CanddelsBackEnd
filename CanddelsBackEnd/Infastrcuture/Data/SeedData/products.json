@@ -11,7 +11,7 @@
     "ProductVariantId": null,
     "CategoryId": 1,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": true
   },
   {
@@ -26,7 +26,7 @@
     "ProductVariantId": null,
     "CategoryId": 2,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": false
   },
   {
@@ -41,7 +41,7 @@
     "ProductVariantId": null,
     "CategoryId": 3,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": true
   },
   {
@@ -56,7 +56,7 @@
     "ProductVariantId": null,
     "CategoryId": 4,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": false
   },
   {
@@ -71,7 +71,7 @@
     "ProductVariantId": null,
     "CategoryId": 5,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": true
   },
   {
@@ -86,7 +86,7 @@
     "ProductVariantId": null,
     "CategoryId": 6,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": false
   },
   {
@@ -101,7 +101,7 @@
     "ProductVariantId": null,
     "CategoryId": 7,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": true
   },
   {
@@ -116,7 +116,7 @@
     "ProductVariantId": null,
     "CategoryId": 8,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": false
   },
   {
@@ -131,7 +131,7 @@
     "ProductVariantId": null,
     "CategoryId": 9,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": false
   },
   {
@@ -146,7 +146,7 @@
     "ProductVariantId": null,
     "CategoryId": 10,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": false
   },
   {
@@ -161,7 +161,7 @@
     "ProductVariantId": null,
     "CategoryId": 11,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": false
   },
   {
@@ -176,7 +176,7 @@
     "ProductVariantId": null,
     "CategoryId": 12,
     "DiscountId": null,
-    "ImageUrl": "wwwroot/images/img1",
+    "ImageUrl": "images/img1",
     "IsDailyOffer": false
   }
 ]
