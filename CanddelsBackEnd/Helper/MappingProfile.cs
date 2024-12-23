@@ -24,6 +24,9 @@ namespace CanddelsBackEnd.Helper
                 .ForMember(dest => dest.IsDailyOffer, 
                 opt => opt.MapFrom(src=> !DiscountHelper.CheckDiscountExpired(src.Discount.EndDate)))
                 .ForMember(dest => dest.LowestPriceAfterDiscount, opt => opt.MapFrom<LowesPriceDiscountResolver>());
+            CreateMap<ProductVariant, ProductVariantDto>();
+
+          
 
             CreateMap<Product, ProductToReturnByIdDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))

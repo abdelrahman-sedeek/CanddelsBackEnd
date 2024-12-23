@@ -1,4 +1,4 @@
-﻿using CanddelsBackEnd.Contexts;
+using CanddelsBackEnd.Contexts;
 using CanddelsBackEnd.Dtos;
 using CanddelsBackEnd.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -195,9 +195,8 @@ namespace CanddelsBackEnd.Controllers
             });
 
             return Ok(cartItems);
-
-
         }
+        
         private string GenerateSecureSessionId()
         {
             return Guid.NewGuid().ToString("N") + "-" + RandomNumberGenerator.GetInt32(1000, 10000);
