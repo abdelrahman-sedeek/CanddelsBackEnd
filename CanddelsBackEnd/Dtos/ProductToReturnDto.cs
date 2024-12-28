@@ -19,15 +19,6 @@ namespace CanddelsBackEnd.Dtos
         public decimal LowestPrice { get; set; } 
         public decimal HighestPriceAfterDiscount { get; set; }
         public decimal LowestPriceAfterDiscount { get; set; }
-
-
-        public int Stock { get; set; }
-   
-        public int? DiscountId { get; set; }
-        //public virtual Discount? Discount { get; set; }
-
- 
-
         public string CategoryName {  get; set; }
         public string CategoryId { get; set; }
 
