@@ -10,8 +10,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 1,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": true
   },
   {
@@ -25,8 +30,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 2,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": false
   },
   {
@@ -40,8 +50,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 3,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": true
   },
   {
@@ -55,8 +70,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 4,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": false
   },
   {
@@ -70,8 +90,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 5,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": true
   },
   {
@@ -85,8 +110,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 6,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": false
   },
   {
@@ -100,8 +130,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 7,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": true
   },
   {
@@ -115,8 +150,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 8,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": false
   },
   {
@@ -130,8 +170,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 9,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": false
   },
   {
@@ -145,8 +190,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 10,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": false
   },
   {
@@ -160,8 +210,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 11,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": false
   },
   {
@@ -175,8 +230,13 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 12,
+<<<<<<< HEAD
     "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
+=======
+    "DiscountId": null,
+    "ImageUrl": "images/img1",
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     "IsDailyOffer": false
   }
 ]

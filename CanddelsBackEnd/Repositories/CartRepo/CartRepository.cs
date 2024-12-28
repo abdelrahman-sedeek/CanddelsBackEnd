@@ -1,10 +1,18 @@
-﻿namespace CanddelsBackEnd.Repositories.CartRepo
-{
-    public class CartRepository
-    {
+﻿using CanddelsBackEnd.Contexts;
+using CanddelsBackEnd.Models;
+using Microsoft.EntityFrameworkCore;
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+namespace CanddelsBackEnd.Repositories.CartRepo
+{
+    public class CartRepository:ICartRepository
+    {
+        private readonly CandelContext _context;
+
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
         public CartRepository(CandelContext context)
         {
             _context = context;
@@ -17,7 +25,11 @@
                 .Include(c => c.CartItems)
                 .ThenInclude(ci => ci.ProductVariant)
                 .ThenInclude(pv => pv.Product)
+<<<<<<< HEAD
 
+=======
+                .ThenInclude(p => p.Discount)
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
                 .SingleOrDefaultAsync(c => c.SessionId == sessionId);
         }
 
@@ -48,6 +60,9 @@
         {
             await _context.SaveChangesAsync();
         }
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
     }
 }

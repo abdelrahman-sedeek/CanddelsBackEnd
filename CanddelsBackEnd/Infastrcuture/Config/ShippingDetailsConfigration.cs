@@ -10,10 +10,10 @@ namespace CanddelsBackEnd.Infastrcuture.Config
         public void Configure(EntityTypeBuilder<ShippingDetail> builder)
         {
             // Order and ShippingDetail (One-to-One)
-            builder
-                .HasOne(sd => sd.Order)
-                .WithOne(o => o.ShippingDetail)
-                .HasForeignKey<ShippingDetail>(sd => sd.OrderId);
+            //builder
+            //    .HasOne(sd => sd.Order)
+            //    .WithOne(o => o.ShippingDetail)
+            //    .HasForeignKey<ShippingDetail>(sd => sd.OrderId);
         }
     }
 }

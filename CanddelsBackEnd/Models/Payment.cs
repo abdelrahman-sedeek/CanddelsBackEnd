@@ -11,6 +11,7 @@
         public string Status { get; set; } // Success, Failed //enum
 
         public Order Order { get; set; }
+  
     }
 
 }

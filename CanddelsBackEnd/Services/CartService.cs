@@ -80,8 +80,13 @@ namespace CanddelsBackEnd.Services
 
             return cart.CartItems.Select(ci =>
             {
+<<<<<<< HEAD
                 var discount = ci.ProductVariant.Product.DiscountPercentage;
                 bool isOfferActive = ci.ProductVariant.Product.IsDailyOffer && ci.ProductVariant.Product.DiscountPercentage !=null;
+=======
+                var discount = ci.ProductVariant.Product.Discount;
+                bool isOfferActive = discount != null && discount.StartDate <= DateTime.Now && discount.EndDate > DateTime.Now;
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
 
                 return new
                 {   ci.Id,
@@ -91,7 +96,11 @@ namespace CanddelsBackEnd.Services
                     ci.ProductVariant.Product.Scent,
                     ci.Quantity,
                     Price = isOfferActive
+<<<<<<< HEAD
                         ? ci.ProductVariant.Price - (discount* ci.ProductVariant.Price / 100)
+=======
+                        ? ci.ProductVariant.Price - (discount?.DiscountPercentage * ci.ProductVariant.Price / 100)
+>>>>>>> 433c6e7619e53375c895c1ce2484b0640f0af728
                         : ci.ProductVariant.Price
                 };
             });

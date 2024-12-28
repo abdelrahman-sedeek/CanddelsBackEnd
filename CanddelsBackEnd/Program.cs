@@ -16,6 +16,9 @@ using Microsoft.Extensions.Logging;
 using AutoMapper;
 using System;
 using CanddelsBackEnd.Helper;
+using CanddelsBackEnd.Repositories.CartRepo;
+using CanddelsBackEnd.Repositories.OrderRepo;
+using CanddelsBackEnd.Repositories.ShippingDetailsRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +37,7 @@ builder.Services.AddScoped<AdminCredentialsManager>();
 
 
 builder.Services.AddScoped<CartHelper>();
+builder.Services.AddHostedService<CartCleanupService>();
 
 
 
@@ -69,8 +73,14 @@ builder.Services.AddControllers().AddNewtonsoftJson(op=>op.SerializerSettings.Re
 Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddDbContext<CandelContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+builder.Services.AddScoped<ICartRepository,CartRepository>();
 builder.Services.AddScoped<IproductRepository, ProductRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IShippingDetailsRepo, ShippingDetailsRepo>();
+builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<CartService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
