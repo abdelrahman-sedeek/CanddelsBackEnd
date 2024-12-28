@@ -32,9 +32,8 @@ namespace CanddelsBackEnd.Models
 
         public virtual ICollection<ProductVariant> productVariants { get; set; } = new List<ProductVariant>();
 
-        public int? DiscountId { get; set; }
+        public decimal? DiscountPercentage { get; set; }
 
-        public virtual Discount? Discount { get; set; }
 
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }

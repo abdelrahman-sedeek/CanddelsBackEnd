@@ -14,24 +14,22 @@ namespace CanddelsBackEnd.Helper
 
             CreateMap<ProductVariant, ProductVariantDto>()
                 .ForMember(dest => dest.PriceAfterDiscount, opt => opt.MapFrom(((src, dest) =>            
-                   dest.Price - (src?.Product?.Discount?.DiscountPercentage * dest.Price / 100)
+                   dest.Price - (src?.Product?.DiscountPercentage * dest.Price / 100)
                 )));
-                
+
             CreateMap<Product, ProductToReturnDto>()
                 .ForMember(dest => dest.HighestPrice, opt => opt.MapFrom(src => GetHighestPrice(src.productVariants)))
                 .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPrice(src.productVariants)))
-                .ForMember(dest => dest.HighestPriceAfterDiscount, opt => opt.MapFrom<HighestPriceDiscountResolver>())
-                .ForMember(dest => dest.IsDailyOffer, 
-                opt => opt.MapFrom(src=> !DiscountHelper.CheckDiscountExpired(src.Discount.EndDate)))
-                .ForMember(dest => dest.LowestPriceAfterDiscount, opt => opt.MapFrom<LowesPriceDiscountResolver>());
+                .ForMember(dest => dest.HighestPriceAfterDiscount, opt => opt.MapFrom<HighestPriceDiscountPercentageResolver>());
+      
+            
             CreateMap<ProductVariant, ProductVariantDto>();
 
-          
+
 
             CreateMap<Product, ProductToReturnByIdDto>()
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
-                .ForMember(dest => dest.IsDailyOffer,
-                opt => opt.MapFrom(src => !DiscountHelper.CheckDiscountExpired(src.Discount.EndDate)));
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name));
+               
                
 
             CreateMap<Category, CategoryToReturnDto>();

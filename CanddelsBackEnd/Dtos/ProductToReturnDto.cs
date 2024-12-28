@@ -22,6 +22,7 @@ namespace CanddelsBackEnd.Dtos
 
 
         public int Stock { get; set; }
+<<<<<<< Updated upstream
         public decimal? HighestPrice { get; set; }
         public decimal? LowestPrice { get; set; } 
         public decimal? HighestPriceAfterDiscount { get; set; }
@@ -31,6 +32,8 @@ namespace CanddelsBackEnd.Dtos
         public virtual Discount? Discount { get; set; }
 
  
+=======
+>>>>>>> Stashed changes
 
         public string CategoryName {  get; set; }
         public string CategoryId { get; set; }

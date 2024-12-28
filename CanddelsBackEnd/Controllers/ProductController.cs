@@ -13,13 +13,19 @@ namespace CanddelsBackEnd.Controllers
     [Route("api/[controller]")]
     public class ProductController: ControllerBase
     {
-        private readonly IGenericRepository<Product> _productRepo;
+    
         private readonly IproductRepository _repository;
+        private readonly IGenericRepository<Product> _productRepo;
+        private readonly IGenericRepository<ProductVariant> _productVariantRepo;
         private readonly IMapper _mapper;
 
-        public ProductController(IGenericRepository<Product> productRepo,IproductRepository repository,IMapper mapper)
+        public ProductController( 
+            IGenericRepository<Product> productRepo,
+            IGenericRepository<ProductVariant> productVariantRepo, 
+            IproductRepository repository,IMapper mapper)
         {
             _productRepo = productRepo;
+            _productVariantRepo = productVariantRepo;
             _repository = repository;
             _mapper = mapper;
         } 
@@ -89,6 +95,85 @@ namespace CanddelsBackEnd.Controllers
            var scents = await _repository.GetScentsAsync();
 
             return Ok(scents);
+        }
+
+        [HttpPost("add-product")]
+        public async Task<ActionResult> addProduct(AddProductDto product)
+        {
+            if (product == null) return BadRequest("Product is null");
+
+            var Addproduct = new Product()
+                {
+                    CategoryId = product.CategoryId,
+                    Benfits = product.Benfits,
+                    CalltoAction = product.CalltoAction,
+                    Description = product.Description,
+                    DiscountPercentage = product.DiscountPercentage,
+                    Features = product.Features,
+                    ImageUrl = product.ImageUrl,
+                    CreatedAt= DateTime.Now,
+                    Scent = product.Scent,
+                    IsBestSeller = product.IsBestSeller,
+                    IsDailyOffer= product.IsDailyOffer,
+                    Name = product.Name,
+
+                };
+                
+            await _productRepo.AddAsync(Addproduct);
+            return Ok("Product added successfully");
+
+
+        }
+        [HttpPost("add-productVariant/{id}")]
+        public async Task<ActionResult> addProductVariants(List<AddProductVariantsDto> productVariants, int id)
+        {
+            var product = await  _productRepo.GetByIdAsync(id);
+            if (product == null) return BadRequest("Product is null");
+            var newVariants = productVariants.Select(variant => new ProductVariant
+            {
+                Barcode = variant.Barcode,
+                Price = variant.Price,
+                StockQuantity = variant.StockQuantity,
+                Weight = variant.Weight,
+                ProductId = id,
+            }).ToList();
+
+            await _productVariantRepo.AddRangeAsync(newVariants);
+            return Ok("Product variant added successfully");
+        }
+
+        [HttpPut("update-product")]
+        public async Task<IActionResult> updateProduct (Product product,int id)
+        {
+            var existingProduct = await _productRepo.GetByIdAsync(id);
+            if (existingProduct == null) return NotFound("Product not found");
+            
+            existingProduct.Name = product.Name;
+            existingProduct.Description = product.Description;
+            existingProduct.CategoryId = product.CategoryId;
+            existingProduct.Benfits = product.Benfits;
+            existingProduct.ImageUrl = product.ImageUrl;
+            existingProduct.DiscountPercentage = product.DiscountPercentage;
+            existingProduct.Scent = product.Scent;
+            existingProduct.IsBestSeller = product.IsBestSeller;
+            existingProduct.IsDailyOffer = product.IsDailyOffer;
+            
+            await _productRepo.UpdateAsync(existingProduct);
+            return Ok("Product updated successfully");
+        
+        }
+        [HttpDelete()]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            try
+            {
+                await _productRepo.DeleteAsync(id);
+                return Ok("Product deleted successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
     }

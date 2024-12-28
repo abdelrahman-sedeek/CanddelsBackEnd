@@ -10,7 +10,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 1,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": true
   },
@@ -25,7 +25,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 2,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": false
   },
@@ -40,7 +40,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 3,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": true
   },
@@ -55,7 +55,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 4,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": false
   },
@@ -70,7 +70,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 5,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": true
   },
@@ -85,7 +85,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 6,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": false
   },
@@ -100,7 +100,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 7,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": true
   },
@@ -115,7 +115,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 8,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": false
   },
@@ -130,7 +130,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 9,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": false
   },
@@ -145,7 +145,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 10,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": false
   },
@@ -160,7 +160,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 11,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": false
   },
@@ -175,7 +175,7 @@
     "IsDeleted": false,
     "ProductVariantId": null,
     "CategoryId": 12,
-    "DiscountId": null,
+    "DiscountPercentage": null,
     "ImageUrl": "wwwroot/images/img1",
     "IsDailyOffer": false
   }

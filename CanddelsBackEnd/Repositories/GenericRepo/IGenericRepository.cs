@@ -11,6 +11,10 @@ namespace CanddelsBackEnd.Repositories.GenericRepo
         Task <List<T>> GetAllWithSpecAsync(ISpecification<T> spec);
         Task <T> GetByIdWithSpecAsync(ISpecification<T> spec);
         Task<int> CountAsync(Expression<Func<T, bool>> criteria);
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task AddRangeAsync(IEnumerable<ProductVariant> entities);
+        Task DeleteAsync(int id);
 
 
 
