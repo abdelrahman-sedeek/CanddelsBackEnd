@@ -20,7 +20,6 @@ namespace CanddelsBackEnd.Specifications
         {
             AddInclude(X => X.productVariants);
             AddInclude(X =>X.Category);
-            AddInclude(x => x.DiscountPercentage);
 
             ApplyPaging(ProductPrams.PageSize * (ProductPrams.PageIndex - 1), ProductPrams.PageSize);
  
@@ -30,7 +29,6 @@ namespace CanddelsBackEnd.Specifications
         {
             AddInclude(X => X.productVariants.Where(v=>v.ProductId==id));
             AddInclude(X => X.Category);
-            AddInclude(X => X.DiscountPercentage);
 
         }
         public ProductSpesification(bool IsBestSeller) :base(x=>x.IsBestSeller== IsBestSeller)

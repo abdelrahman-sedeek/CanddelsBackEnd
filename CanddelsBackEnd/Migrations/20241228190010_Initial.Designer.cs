@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CanddelsBackEnd.Migrations
 {
     [DbContext(typeof(CandelContext))]
-    [Migration("20241207120841_NullForgienKey")]
-    partial class NullForgienKey
+    [Migration("20241228190010_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,12 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SessionId")
                         .IsRequired()
@@ -92,34 +98,6 @@ namespace CanddelsBackEnd.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("CanddelsBackEnd.Models.Discount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("DiscountPercentage")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsDiscounted")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal?>("PriceAfterDiscount")
-                        .HasColumnType("decimal(5, 2)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Discounts");
-                });
-
             modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -135,9 +113,6 @@ namespace CanddelsBackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PaymentStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -150,6 +125,8 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ShippingDetailId");
 
                     b.ToTable("Orders");
                 });
@@ -182,43 +159,6 @@ namespace CanddelsBackEnd.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("CanddelsBackEnd.Models.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("ShippingPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.ToTable("Payments");
-                });
-
             modelBuilder.Entity("CanddelsBackEnd.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -228,11 +168,9 @@ namespace CanddelsBackEnd.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Benfits")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CalltoAction")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CategoryId")
@@ -242,14 +180,12 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DiscountId")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("DiscountPercentage")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Features")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
@@ -259,6 +195,9 @@ namespace CanddelsBackEnd.Migrations
                     b.Property<bool>("IsBestSeller")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDailyOffer")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -266,11 +205,7 @@ namespace CanddelsBackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductVariantId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Scent")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -279,8 +214,6 @@ namespace CanddelsBackEnd.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("DiscountId");
 
                     b.ToTable("Products");
                 });
@@ -307,6 +240,9 @@ namespace CanddelsBackEnd.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal?>("PriceAfterDiscount")
+                        .HasColumnType("decimal(5, 2)");
+
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
@@ -317,9 +253,6 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Barcode")
-                        .IsUnique();
 
                     b.HasIndex("OrderItemId")
                         .IsUnique()
@@ -358,9 +291,6 @@ namespace CanddelsBackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -373,9 +303,6 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
 
                     b.ToTable("ShippingDetails");
                 });
@@ -399,22 +326,22 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("ProductVariant");
                 });
 
+            modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
+                {
+                    b.HasOne("CanddelsBackEnd.Models.ShippingDetail", "ShippingDetail")
+                        .WithMany()
+                        .HasForeignKey("ShippingDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ShippingDetail");
+                });
+
             modelBuilder.Entity("CanddelsBackEnd.Models.OrderItem", b =>
                 {
                     b.HasOne("CanddelsBackEnd.Models.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("CanddelsBackEnd.Models.Payment", b =>
-                {
-                    b.HasOne("CanddelsBackEnd.Models.Order", "Order")
-                        .WithOne("Payment")
-                        .HasForeignKey("CanddelsBackEnd.Models.Payment", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -429,13 +356,7 @@ namespace CanddelsBackEnd.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CanddelsBackEnd.Models.Discount", "Discount")
-                        .WithMany()
-                        .HasForeignKey("DiscountId");
-
                     b.Navigation("Category");
-
-                    b.Navigation("Discount");
                 });
 
             modelBuilder.Entity("CanddelsBackEnd.Models.ProductVariant", b =>
@@ -453,17 +374,6 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("CanddelsBackEnd.Models.ShippingDetail", b =>
-                {
-                    b.HasOne("CanddelsBackEnd.Models.Order", "Order")
-                        .WithOne("ShippingDetail")
-                        .HasForeignKey("CanddelsBackEnd.Models.ShippingDetail", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("CanddelsBackEnd.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
@@ -477,12 +387,6 @@ namespace CanddelsBackEnd.Migrations
             modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-
-                    b.Navigation("Payment")
-                        .IsRequired();
-
-                    b.Navigation("ShippingDetail")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CanddelsBackEnd.Models.OrderItem", b =>
