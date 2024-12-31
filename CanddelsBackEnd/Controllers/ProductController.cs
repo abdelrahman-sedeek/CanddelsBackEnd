@@ -102,29 +102,69 @@ namespace CanddelsBackEnd.Controllers
         }
 
         [HttpPost("add-product")]
-        public async Task<ActionResult> addProduct(AddProductDto product)
+        public async Task<ActionResult> addProduct([FromForm]AddProductDto product)
         {
             if (product == null) return BadRequest("Product is null");
 
-            var Addproduct = new Product()
-                {
-                    CategoryId = product.CategoryId,
-                    Benfits = product.Benfits,
-                    CalltoAction = product.CalltoAction,
-                    Description = product.Description,
-                    DiscountPercentage = product.DiscountPercentage,
-                    Features = product.Features,
-                    ImageUrl = product.ImageUrl,
-                    CreatedAt= DateTime.Now,
-                    Scent = product.Scent,
-                    IsBestSeller = product.IsBestSeller,
-                    IsDailyOffer= product.IsDailyOffer,
-                    Name = product.Name,
+            string imageUrl = null;
 
-                };
+            // Check if the product has an image
+            if (product.Image != null)
+            {
+                // Validate Image Type and Size
+                var allowedTypes = new[] { "image/jpeg", "image/png", "image/jpg" };
+                if (!allowedTypes.Contains(product.Image.ContentType))
+                {
+                    return BadRequest("Invalid file type. Only JPEG, PNG, and JPG are allowed.");
+                }
+
+                if (product.Image.Length > 5 * 1024 * 1024) // 5MB size limit
+                {
+                    return BadRequest("File size exceeds 5MB.");
+                }
+
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
+
+                var filepath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Ensure directory exists
+                Directory.CreateDirectory(uploadsFolder);
+
+                try
+                {
+                    using (var fileStream = new FileStream(filepath, FileMode.Create))
+                    {
+                        await product.Image.CopyToAsync(fileStream);
+                    }
+                    // Construct the image URL (relative path)
+                    imageUrl = Path.Combine("images", uniqueFileName);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, $"Error saving the image: {ex.Message}");
+                }
+            }
+
+            var Addproduct = new Product()
+            {
+                CategoryId = product.CategoryId,
+                Benfits = product.Benfits,
+                CalltoAction = product.CalltoAction,
+                Description = product.Description,
+                DiscountPercentage = product.DiscountPercentage,
+                Features = product.Features,
+                CreatedAt= DateTime.Now,
+                Scent = product.Scent,
+                IsBestSeller = product.IsBestSeller,
+                IsDailyOffer= product.IsDailyOffer,
+                Name = product.Name,
+                ImageUrl = imageUrl
+
+            };
                 
             await _productRepo.AddAsync(Addproduct);
-            return Ok("Product added successfully");
+            return Ok();
 
 
         }
