@@ -6,6 +6,7 @@ using CanddelsBackEnd.Repositories.GenericRepo;
 using CanddelsBackEnd.Repositories.PorductRepo;
 using CanddelsBackEnd.Specifications;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace CanddelsBackEnd.Controllers
 {
@@ -15,6 +16,7 @@ namespace CanddelsBackEnd.Controllers
     {
     
         private readonly IproductRepository _repository;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IGenericRepository<Product> _productRepo;
         private readonly IGenericRepository<ProductVariant> _productVariantRepo;
         private readonly IMapper _mapper;
@@ -22,11 +24,13 @@ namespace CanddelsBackEnd.Controllers
         public ProductController( 
             IGenericRepository<Product> productRepo,
             IGenericRepository<ProductVariant> productVariantRepo, 
-            IproductRepository repository,IMapper mapper)
+            IproductRepository repository,
+            IWebHostEnvironment webHostEnvironment,IMapper mapper)
         {
             _productRepo = productRepo;
             _productVariantRepo = productVariantRepo;
             _repository = repository;
+            _webHostEnvironment = webHostEnvironment;
             _mapper = mapper;
         } 
         [HttpGet]
@@ -142,26 +146,46 @@ namespace CanddelsBackEnd.Controllers
             return Ok("Product variant added successfully");
         }
 
-        [HttpPut("update-product")]
-        public async Task<IActionResult> updateProduct (Product product,int id)
+        [HttpPut("update-product/{id}")]
+        public async Task<IActionResult> updateProduct([FromForm] UpdateProduct product, int id)
         {
             var existingProduct = await _productRepo.GetByIdAsync(id);
             if (existingProduct == null) return NotFound("Product not found");
-            
-            existingProduct.Name = product.Name;
-            existingProduct.Description = product.Description;
+
+            if (product.Image is not null)
+            {
+                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
+
+                var filepath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                Directory.CreateDirectory(uploadsFolder);
+
+                using (var filestream = new FileStream(filepath, FileMode.Create))
+                {
+                    await product.Image.CopyToAsync(filestream);
+                }
+
+                existingProduct.ImageUrl = Path.Combine("images", uniqueFileName);
+            }
+
+            existingProduct.Name = product.Name ;
+            existingProduct.Description = product.Description ?? existingProduct.Description;
             existingProduct.CategoryId = product.CategoryId;
-            existingProduct.Benfits = product.Benfits;
-            existingProduct.ImageUrl = product.ImageUrl;
+            existingProduct.Benfits = product.Benefits ?? existingProduct.Benfits;
+            existingProduct.Features = product.Features ?? existingProduct.Features;
+            existingProduct.CalltoAction = product.CallToAction ?? existingProduct.CalltoAction;
             existingProduct.DiscountPercentage = product.DiscountPercentage;
-            existingProduct.Scent = product.Scent;
-            existingProduct.IsBestSeller = product.IsBestSeller;
+            existingProduct.Scent = product.Scent ;
+            existingProduct.IsBestSeller = product.IsBestSeller ;
             existingProduct.IsDailyOffer = product.IsDailyOffer;
-            
+
             await _productRepo.UpdateAsync(existingProduct);
-            return Ok("Product updated successfully");
-        
+            return Ok();
         }
+
+
+
         [HttpDelete()]
         public async Task<ActionResult> DeleteProduct(int id)
         {
