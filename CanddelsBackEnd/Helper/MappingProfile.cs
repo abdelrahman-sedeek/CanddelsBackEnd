@@ -22,8 +22,8 @@ namespace CanddelsBackEnd.Helper
                 .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPrice(src.productVariants)))
                 .ForMember(dest => dest.HighestPriceAfterDiscount, opt => opt.MapFrom<HighestPriceDiscountPercentageResolver>())
                 .ForMember(dest => dest.LowestPriceAfterDiscount, opt => opt.MapFrom<LowesPriceDiscountPercentageResolver>());
-      
-            
+
+
             CreateMap<ProductVariant, ProductVariantDto>();
 
 
