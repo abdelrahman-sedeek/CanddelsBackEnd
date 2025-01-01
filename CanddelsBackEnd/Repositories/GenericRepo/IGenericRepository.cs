@@ -15,8 +15,10 @@ namespace CanddelsBackEnd.Repositories.GenericRepo
         Task UpdateAsync(T entity);
         Task AddRangeAsync(IEnumerable<ProductVariant> entities);
         Task DeleteAsync(int id);
+        Task UpdateRangeAsync(IEnumerable<ProductVariant> variants);
+        Task<List<ProductVariant>> GetByProductIdAsync(int id);
 
-
+        Task DeleteRangeAsync(IEnumerable<ProductVariant> variants);
 
 
 

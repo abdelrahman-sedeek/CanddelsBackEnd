@@ -30,9 +30,28 @@ namespace CanddelsBackEnd.Repositories.GenericRepo
             await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<ProductVariant>> GetByProductIdAsync(int productId)
+        {
+           
+            return await _context.ProductVariants
+                .Where(variant => variant.ProductId == productId)
+                .ToListAsync();
+        }
+
         public async Task AddRangeAsync(IEnumerable<ProductVariant> entities)
         {
             _context.ProductVariants.AddRange(entities);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateRangeAsync(IEnumerable<ProductVariant> variants)
+        {
+            _context.ProductVariants.UpdateRange(variants);
+            await _context.SaveChangesAsync();
+        }
+        public async Task DeleteRangeAsync(IEnumerable<ProductVariant> variants)
+        {
+            _context.ProductVariants.RemoveRange(variants);
             await _context.SaveChangesAsync();
         }
 

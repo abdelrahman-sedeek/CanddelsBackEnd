@@ -26,14 +26,7 @@ namespace CanddelsBackEnd.Models
         public decimal? PriceAfterDiscount {  get; set; }
        
 
-        //private decimal? GetPriceAfterDiscount()
-        //{
-        //    if(Product.IsDailyOffer && Product?.Discount?.EndDate > DateTime.Now)
-        //    {
-        //        return Price - (Price * Product.Discount.DiscountPercentage / 100); 
-        //    }
-        //    return Price;
-        //}
+      
 
 
     }
