@@ -51,7 +51,9 @@ namespace CanddelsBackEnd.Controllers
                 TotalCount = await _productRepo.CountAsync(spec.Criteria),
                 Data = productsToReturn
             });
-        }
+        } 
+        
+        
 
         [HttpGet("homeProducts")]
         public async Task<ActionResult<List<ProductToReturnDto>>> GetHomeproducts()
@@ -168,23 +170,8 @@ namespace CanddelsBackEnd.Controllers
 
 
         }
-        [HttpPost("add-productVariant/{id}")]
-        public async Task<ActionResult> addProductVariants(List<AddProductVariantsDto> productVariants, int id)
-        {
-            var product = await  _productRepo.GetByIdAsync(id);
-            if (product == null) return BadRequest("Product is null");
-            var newVariants = productVariants.Select(variant => new ProductVariant
-            {
-                Barcode = variant.Barcode,
-                Price = variant.Price,
-                StockQuantity = variant.StockQuantity,
-                Weight = variant.Weight,
-                ProductId = id,
-            }).ToList();
 
-            await _productVariantRepo.AddRangeAsync(newVariants);
-            return Ok("Product variant added successfully");
-        }
+       
 
         [HttpPut("update-product/{id}")]
         public async Task<IActionResult> updateProduct([FromForm] UpdateProduct product, int id)
@@ -224,6 +211,81 @@ namespace CanddelsBackEnd.Controllers
             return Ok();
         }
 
+        [HttpPut("update-productVariant/{id}")]
+        public async Task<ActionResult> UpdateProductVariants(int id, List<ProductVariantDto> productVariants)
+        {
+            var product = await _productRepo.GetByIdAsync(id);
+            if (product == null)
+                return NotFound($"Product with ID {id} does not exist.");
+
+          
+
+            var existingVariants = await _productVariantRepo.GetByProductIdAsync(id);
+
+            if (existingVariants.Any() && productVariants is null)
+            {
+                await _productVariantRepo.DeleteRangeAsync(existingVariants);
+                return Ok();
+            }
+
+            var existingVariantDict = existingVariants.ToDictionary(v => v.Id);
+            var variantIdsToKeep = new HashSet<int>();
+            var newVariants = new List<ProductVariant>();
+            var updatedVariants = new List<ProductVariant>();
+
+            foreach (var variantDto in productVariants)
+            {
+                if (variantDto.Id > 0 && existingVariantDict.TryGetValue(variantDto.Id, out var existingVariant))
+                {
+                    // Update existing variant
+                    existingVariant.Barcode = variantDto.Barcode;
+                    existingVariant.Price = variantDto.Price;
+                    existingVariant.StockQuantity = variantDto.StockQuantity;
+                    existingVariant.Weight = variantDto.Weight;
+                    updatedVariants.Add(existingVariant);
+                    variantIdsToKeep.Add(variantDto.Id);
+                }
+                else
+                {
+                    // Add new variant
+                    newVariants.Add(new ProductVariant
+                    {
+                        ProductId = id,
+                        Barcode = variantDto.Barcode,
+                        Price = variantDto.Price,
+                        StockQuantity = variantDto.StockQuantity,
+                        Weight = variantDto.Weight
+                    });
+                }
+            }
+
+            var variantsToDelete = existingVariants
+                .Where(v => !variantIdsToKeep.Contains(v.Id))
+                .ToList();
+
+            try
+            {
+                if (variantsToDelete.Any())
+                {
+                    await _productVariantRepo.DeleteRangeAsync(variantsToDelete);
+                }
+                if (updatedVariants.Any())
+                {
+                    await _productVariantRepo.UpdateRangeAsync(updatedVariants);
+                }
+                if (newVariants.Any())
+                {
+                    await _productVariantRepo.AddRangeAsync(newVariants);
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                return StatusCode(500, "An error occurred while updating the product variants.");
+            }
+        }
 
 
         [HttpDelete()]

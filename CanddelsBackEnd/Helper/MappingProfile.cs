@@ -18,10 +18,11 @@ namespace CanddelsBackEnd.Helper
                 )));
 
             CreateMap<Product, ProductToReturnDto>()
-                .ForMember(dest => dest.HighestPrice, opt => opt.MapFrom(src => GetHighestPrice(src.productVariants)))
-                .ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPrice(src.productVariants)))
-                .ForMember(dest => dest.HighestPriceAfterDiscount, opt => opt.MapFrom<HighestPriceDiscountPercentageResolver>())
-                .ForMember(dest => dest.LowestPriceAfterDiscount, opt => opt.MapFrom<LowesPriceDiscountPercentageResolver>());
+                .ForMember(dest => dest.Variants, opt => opt.MapFrom(src => src.productVariants));
+                //.ForMember(dest => dest.HighestPrice, opt => opt.MapFrom(src => GetHighestPrice(src.productVariants)))
+                //.ForMember(dest => dest.LowestPrice, opt => opt.MapFrom(src => GetLowestPrice(src.productVariants)))
+                //.ForMember(dest => dest.HighestPriceAfterDiscount, opt => opt.MapFrom<HighestPriceDiscountPercentageResolver>())
+                //.ForMember(dest => dest.LowestPriceAfterDiscount, opt => opt.MapFrom<LowesPriceDiscountPercentageResolver>());
 
 
             CreateMap<ProductVariant, ProductVariantDto>();

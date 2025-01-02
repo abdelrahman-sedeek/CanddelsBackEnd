@@ -12,8 +12,11 @@ namespace CanddelsBackEnd.Dtos
         public bool IsDeleted { get; set; }
         public bool IsDailyOffer { get; set; }
 
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string? Description { get; set; }
+        public string? Features { get; set; }
+        public string? Benfits { get; set; }
+        public string? CalltoAction { get; set; }
+
         public string ImageUrl { get; set; }
         public decimal HighestPrice { get; set; }
         public decimal LowestPrice { get; set; } 
@@ -22,6 +25,7 @@ namespace CanddelsBackEnd.Dtos
         public string CategoryName {  get; set; }
         public string CategoryId { get; set; }
 
+        public List<ProductVariantDto> Variants { get; set; } = new List<ProductVariantDto>();
 
 
     }
