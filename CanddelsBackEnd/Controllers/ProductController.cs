@@ -211,27 +211,6 @@ namespace CanddelsBackEnd.Controllers
             return Ok();
         }
 
-
-        //[HttpPost("add-productVariant/{id}")]
-        //public async Task<ActionResult> addProductVariants(List<AddProductVariantsDto> productVariants, int id)
-        //{
-        //    var product = await _productRepo.GetByIdAsync(id);
-        //    if (product == null) return BadRequest("Product is null");
-        //    var newVariants = productVariants.Select(variant => new ProductVariant
-        //    {
-        //        Barcode = variant.Barcode,
-        //        Price = variant.Price,
-        //        StockQuantity = variant.StockQuantity,
-        //        Weight = variant.Weight,
-        //        ProductId = id,
-        //    }).ToList();
-
-        //    await _productVariantRepo.AddRangeAsync(newVariants);
-        //    return Ok("Product variant added successfully");
-        //}
-
-
-
         [HttpPut("update-productVariant/{id}")]
         public async Task<ActionResult> UpdateProductVariants(int id, List<ProductVariantDto> productVariants)
         {
@@ -239,10 +218,15 @@ namespace CanddelsBackEnd.Controllers
             if (product == null)
                 return NotFound($"Product with ID {id} does not exist.");
 
-            if (productVariants == null || !productVariants.Any())
-                return BadRequest("No variants provided for update.");
+          
 
             var existingVariants = await _productVariantRepo.GetByProductIdAsync(id);
+
+            if (existingVariants.Any() && productVariants is null)
+            {
+                await _productVariantRepo.DeleteRangeAsync(existingVariants);
+                return Ok();
+            }
 
             var existingVariantDict = existingVariants.ToDictionary(v => v.Id);
             var variantIdsToKeep = new HashSet<int>();
@@ -302,8 +286,6 @@ namespace CanddelsBackEnd.Controllers
                 return StatusCode(500, "An error occurred while updating the product variants.");
             }
         }
-
-
 
 
         [HttpDelete()]
