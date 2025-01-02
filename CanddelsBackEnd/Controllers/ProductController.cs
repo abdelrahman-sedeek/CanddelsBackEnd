@@ -51,6 +51,26 @@ namespace CanddelsBackEnd.Controllers
                 TotalCount = await _productRepo.CountAsync(spec.Criteria),
                 Data = productsToReturn
             });
+        }
+
+        [HttpGet("dashboard-products")]
+        public async Task<ActionResult<List<ProductDashboardDto>>> GetproductsForDahboard(
+            [FromQuery] ProductParameters ProductPrams)
+        {
+            var spec = new ProductSpesification(ProductPrams);
+            var products = await _productRepo.GetAllWithSpecAsync(spec);
+
+            
+         
+            var productsToReturn = _mapper.Map<List<Product>, List<ProductDashboardDto>>(products);
+
+            return Ok(new
+            {
+                PageIndex = ProductPrams.PageIndex,
+                PageSize = ProductPrams.PageSize,
+                TotalCount = await _productRepo.CountAsync(spec.Criteria),
+                Data = productsToReturn
+            });
         } 
         
         
@@ -219,7 +239,6 @@ namespace CanddelsBackEnd.Controllers
                 return NotFound($"Product with ID {id} does not exist.");
 
           
-
             var existingVariants = await _productVariantRepo.GetByProductIdAsync(id);
 
             if (existingVariants.Any() && productVariants is null)
