@@ -21,13 +21,20 @@ namespace CanddelsBackEnd.Controllers
         }
 
         [HttpPost("confirm-order")]
-        public async Task<IActionResult> ConfirmOrder( [FromHeader] int cartId, [FromBody] ShippingDetailsDto shippingDetail)
+        public async Task<IActionResult> ConfirmOrder([FromBody] ShippingDetailsDto shippingDetail)
         {
-            if(shippingDetail == null)
+            if(!Request.Cookies.TryGetValue("SessionId",out var sessionIdValue))
+            {
+                return BadRequest(new { Error = "SessionId header is missing or invalid." });
+            }
+
+            if (shippingDetail == null)
             {
                 return BadRequest(new { Error = "Shipping details are required." });
             }
-            var order= await _orderService.ConfirmOrderAsync(cartId, shippingDetail);
+
+            var sessionId = sessionIdValue.ToString();
+            var order= await _orderService.ConfirmOrderAsync(sessionId, shippingDetail);
             return Ok(new
             {
                 orderId=order.Id,

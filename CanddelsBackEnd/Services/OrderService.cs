@@ -4,6 +4,7 @@ using CanddelsBackEnd.Models;
 using CanddelsBackEnd.Repositories.CartRepo;
 using CanddelsBackEnd.Repositories.OrderRepo;
 using CanddelsBackEnd.Repositories.ShippingDetailsRepo;
+using Microsoft.EntityFrameworkCore;
 
 namespace CanddelsBackEnd.Services
 {
@@ -27,29 +28,44 @@ namespace CanddelsBackEnd.Services
             _context = context;
         }
 
-        public async Task<Order> ConfirmOrderAsync(int cartId, ShippingDetailsDto shippingDetail)
+        public async Task<Order> ConfirmOrderAsync(string sessionId, ShippingDetailsDto shippingDetail)
         {
             
-            var cart = await _cartRepository.GetCartWithItemsAsync(cartId);
+            var cart = await _cartRepository.GetCartBySessionIdAsync(sessionId);
+
             if (cart == null || !cart.CartItems.Any())
             {
                 throw new Exception("Cart is empty or does not exist.");
             }
 
-            var detail = new ShippingDetail
-            {
-                Address = shippingDetail.Address,
-                City = shippingDetail.City,
-                PostalCode = shippingDetail.PostalCode,
-                Country = shippingDetail.Country,
-                Email = shippingDetail.Email,
-                FullName = shippingDetail.FullName,
-                PhoneNumber = shippingDetail.PhoneNumber,
-                State = shippingDetail.State,
-            };
+            var existingDetail = await _context.ShippingDetails
+        .SingleOrDefaultAsync(sd => sd.Email == shippingDetail.Email && sd.PhoneNumber == shippingDetail.PhoneNumber);
 
-            await _context.ShippingDetails.AddAsync(detail);
-            await _context.SaveChangesAsync();
+            ShippingDetail detail;
+            if (existingDetail != null)
+            {
+                // Reuse the existing ShippingDetail
+                detail = existingDetail;
+            }
+            else
+            {
+                // Create a new ShippingDetail
+                detail = new ShippingDetail
+                {
+                    Address = shippingDetail.Address,
+                    City = shippingDetail.City,
+                    PostalCode = shippingDetail.PostalCode,
+                    Country = shippingDetail.Country,
+                    Email = shippingDetail.Email,
+                    FullName = shippingDetail.FullName,
+                    PhoneNumber = shippingDetail.PhoneNumber,
+                    State = shippingDetail.State,
+                };
+
+                await _context.ShippingDetails.AddAsync(detail);
+                await _context.SaveChangesAsync();
+            }
+
             // Create the order
             var order = new Order
             {
