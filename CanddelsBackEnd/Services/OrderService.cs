@@ -70,15 +70,31 @@ namespace CanddelsBackEnd.Services
             var order = new Order
             {
                 OrderDate = DateTime.UtcNow,
-                SubTotal = cart.CartItems.Sum(ci => ci.ProductVariant.Price * ci.Quantity),
-                OrderStatus = "Pending", 
-                PaymentStatus = "Unpaid", 
-                ShippingDetailId = detail.Id,
-                OrderItems = cart.CartItems.Select(ci => new OrderItem
+                SubTotal = (decimal)cart.CartItems.Sum(ci =>
                 {
-                    productVariantId = ci.ProductVariantId,
-                    Quantity = ci.Quantity,
-                    Total = ci.ProductVariant.Price * ci.Quantity
+                    var discountPercentage = ci.ProductVariant.Product.DiscountPercentage ?? 0;
+                    var discountedPrice = discountPercentage > 0
+                        ? ci.ProductVariant.Price - (ci.ProductVariant.Price * discountPercentage / 100)
+                        : ci.ProductVariant.Price;
+
+                    return discountedPrice * ci.Quantity;
+                }),
+                OrderStatus = "Pending",
+                PaymentStatus = "Unpaid",
+                ShippingDetailId = detail.Id,
+                OrderItems = cart.CartItems.Select(ci =>
+                {
+                    var discountPercentage = ci.ProductVariant.Product.DiscountPercentage;
+                    var discountedPrice = discountPercentage > 0
+                        ? ci.ProductVariant.Price - (ci.ProductVariant.Price * discountPercentage / 100)
+                        : ci.ProductVariant.Price;
+
+                    return new OrderItem
+                    {
+                         productVariantId = ci.ProductVariantId,
+                        Quantity = ci.Quantity,
+                        Total = (decimal)(discountedPrice * ci.Quantity) 
+                    };
                 }).ToList()
             };
 
