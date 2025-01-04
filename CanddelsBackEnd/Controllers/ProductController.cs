@@ -160,7 +160,7 @@ namespace CanddelsBackEnd.Controllers
                         await product.Image.CopyToAsync(fileStream);
                     }
                     // Construct the image URL (relative path)
-                    imageUrl = Path.Combine("images", uniqueFileName);
+                    imageUrl = Path.Combine("https://localhost:7012" + "images", uniqueFileName);
                 }
                 catch (Exception ex)
                 {
@@ -213,10 +213,10 @@ namespace CanddelsBackEnd.Controllers
                     await product.Image.CopyToAsync(filestream);
                 }
 
-                existingProduct.ImageUrl = Path.Combine("images", uniqueFileName);
+                existingProduct.ImageUrl = Path.Combine("https://localhost:7012/images", uniqueFileName);
             }
 
-            existingProduct.Name = product.Name ;
+            existingProduct.Name = product.Name;
             existingProduct.Description = product.Description ?? existingProduct.Description;
             existingProduct.CategoryId = product.CategoryId;
             existingProduct.Benfits = product.Benefits ?? existingProduct.Benfits;
