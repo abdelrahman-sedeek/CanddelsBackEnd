@@ -44,8 +44,6 @@ namespace CanddelsBackEnd.Controllers
                 PaymentStatus = order.PaymentStatus
             });
         }
-<<<<<<< Updated upstream
-=======
 
 
         [HttpPut("update-order/{id}")]
@@ -78,7 +76,6 @@ namespace CanddelsBackEnd.Controllers
             return Ok(order);
         }
 
->>>>>>> Stashed changes
 
     }
 }
