@@ -65,5 +65,37 @@ namespace CanddelsBackEnd.Controllers
         }
 
 
+
+        [HttpPut("update-order/{id}")]
+        public async Task<IActionResult> UpdateOrder(int id, [FromBody] UpdateOrderDto updateOrder)
+        {
+            var order = await _orderService.GetOrderById(id);
+
+            if (order == null)
+                return NotFound("order not found");
+
+            order.OrderStatus = updateOrder.OrderStatus;
+            order.PaymentStatus = updateOrder.PaymentStatus;
+
+            await _orderService.UpdateOrder(order);
+
+            return Ok();
+
+        }
+
+        [HttpGet("/dashboard/orders")]
+        public async Task<IActionResult> showOrders()
+        {
+            var orders = await _orderService.GetOrders();
+            return Ok(orders);
+        }
+        [HttpGet("/dashboard/orders/{id}")]
+        public async Task<IActionResult> showOrder(int id)
+        {
+            var order = await _orderService.GetOrderById(id);
+            return Ok(order);
+        }
+
+
     }
 }

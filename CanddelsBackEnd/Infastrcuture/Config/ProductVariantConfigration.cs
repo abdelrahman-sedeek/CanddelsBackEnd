@@ -25,6 +25,7 @@ namespace CanddelsBackEnd.Infastrcuture.Config
                 .WithMany(p => p.productVariants)
                 .HasForeignKey(pv => pv.ProductId);
 
+           
 
         }
     }

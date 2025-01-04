@@ -5,7 +5,7 @@ using System.Reflection.Emit;
 
 namespace CanddelsBackEnd.Infastrcuture.Config
 {
-    public class OrderItemsCpnfigration : IEntityTypeConfiguration<OrderItem>
+    public class OrderItemsConfigration : IEntityTypeConfiguration<OrderItem>
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
@@ -19,8 +19,8 @@ namespace CanddelsBackEnd.Infastrcuture.Config
 
 
             builder.HasOne(oi => oi.productVariant)
-                .WithOne(oi => oi.OrderItem)
-                .HasForeignKey<ProductVariant>(oi => oi.OrderItemId);
+             .WithOne(pv => pv.OrderItem)
+             .HasForeignKey<OrderItem>(oi => oi.productVariantId);
 
 
 
