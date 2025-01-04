@@ -6,7 +6,7 @@ namespace CanddelsBackEnd.Specifications
     public class SpecificationEvaluator<T> where T : BaseEntity
     {
         public static IQueryable<T> GetQuery(IQueryable<T> InputQuery,
-           ISpecification<T> spec)
+            ISpecification<T> spec)
         {
             var query = InputQuery;
             if (spec.Criteria != null)

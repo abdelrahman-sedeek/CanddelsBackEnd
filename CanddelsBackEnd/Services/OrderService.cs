@@ -107,5 +107,25 @@ namespace CanddelsBackEnd.Services
 
             return order;
         }
+
+        public async Task<List<Order>> GetOrders()
+        {
+            return await _context.Orders
+                .Include(o=>o.ShippingDetail)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.productVariant)
+                .ThenInclude(pv=> pv.Product)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+        public async Task<Order> GetOrderById(int id) 
+            => await _context.Orders.Include(o=>o.OrderItems).ThenInclude(oi=>oi.productVariant).SingleOrDefaultAsync(o => o.Id == id);
+
+        public async Task UpdateOrder(Order order)
+        {
+             _context.Orders.Update(order);
+            await _context.SaveChangesAsync();
+
+        }
     }
 }
