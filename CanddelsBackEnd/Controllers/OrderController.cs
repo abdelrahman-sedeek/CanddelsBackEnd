@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using CanddelsBackEnd.Dtos;
 using CanddelsBackEnd.Models;
+using CanddelsBackEnd.Repositories.GenericRepo;
 using CanddelsBackEnd.Services;
+using CanddelsBackEnd.Specifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CanddelsBackEnd.Controllers
@@ -13,11 +15,13 @@ namespace CanddelsBackEnd.Controllers
     {
         private readonly OrderService _orderService;
         private readonly IMapper _mapper;
+        private readonly IGenericRepository<Order> _repo;
 
-        public OrderController(OrderService orderService,IMapper mapper)
+        public OrderController(OrderService orderService,IMapper mapper,IGenericRepository<Order> repo)
         {
             _orderService = orderService;
             _mapper = mapper;
+            _repo = repo;
         }
 
         [HttpPost("confirm-order")]
@@ -44,6 +48,22 @@ namespace CanddelsBackEnd.Controllers
                 PaymentStatus = order.PaymentStatus
             });
         }
+    
+        [HttpGet("/dashboard/orders")]
+        public async Task<IActionResult> showOrders()
+        {
+            var spec = new OrderSpecification();
+            var orders = await _repo.GetAllWithSpecAsync(spec);
+            return Ok(orders);
+        }
+        [HttpGet("/dashboard/orders/{id}")]
+        public async Task<IActionResult> showOrder(int id)
+        {
+            var spec = new OrderSpecification(id);
+            var order = await _repo.GetByIdWithSpecAsync(spec);
+            return Ok(order);
+        }
+
 
 
         [HttpPut("update-order/{id}")]
