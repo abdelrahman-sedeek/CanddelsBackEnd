@@ -24,4 +24,4 @@ namespace CanddelsBackEnd.Specifications
         }
               
     }
-}
+

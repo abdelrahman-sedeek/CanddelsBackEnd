@@ -27,11 +27,11 @@ namespace CanddelsBackEnd.Controllers
         [HttpPost("confirm-order")]
         public async Task<IActionResult> ConfirmOrder([FromBody] ShippingDetailsDto shippingDetail)
         {
-            if(!Request.Cookies.TryGetValue("SessionId",out var sessionIdValue))
+            if(!Request.Headers.TryGetValue("SessionId",out var sessionIdValue))
             {
                 return BadRequest(new { Error = "SessionId header is missing or invalid." });
             }
-
+           
             if (shippingDetail == null)
             {
                 return BadRequest(new { Error = "Shipping details are required." });
@@ -49,22 +49,7 @@ namespace CanddelsBackEnd.Controllers
             });
         }
     
-        [HttpGet("/dashboard/orders")]
-        public async Task<IActionResult> showOrders()
-        {
-            var spec = new OrderSpecification();
-            var orders = await _repo.GetAllWithSpecAsync(spec);
-            return Ok(orders);
-        }
-        [HttpGet("/dashboard/orders/{id}")]
-        public async Task<IActionResult> showOrder(int id)
-        {
-            var spec = new OrderSpecification(id);
-            var order = await _repo.GetByIdWithSpecAsync(spec);
-            return Ok(order);
-        }
-
-
+        
 
         [HttpPut("update-order/{id}")]
         public async Task<IActionResult> UpdateOrder(int id, [FromBody] UpdateOrderDto updateOrder)

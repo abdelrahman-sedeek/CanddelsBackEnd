@@ -12,7 +12,7 @@
     "CategoryId": 1,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": " https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": true
   },
   {

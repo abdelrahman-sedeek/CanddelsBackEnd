@@ -91,7 +91,7 @@ namespace CanddelsBackEnd.Services
 
                     return new OrderItem
                     {
-                         productVariantId = ci.ProductVariantId,
+                         productVariantId = (int)ci.ProductVariantId,
                         Quantity = ci.Quantity,
                         Total = (decimal)(discountedPrice * ci.Quantity) 
                     };

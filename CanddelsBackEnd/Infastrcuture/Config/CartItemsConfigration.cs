@@ -17,6 +17,10 @@ namespace CanddelsBackEnd.Infastrcuture.Config
             builder.HasOne(ci => ci.ProductVariant)
                 .WithOne(ci => ci.CartItem)
                 .HasForeignKey<CartItem>(ci => ci.ProductVariantId);
+          
+            builder.HasOne(ci => ci.CustomProduct)
+                .WithOne(ci => ci.CartItem)
+                .HasForeignKey<CartItem>(ci => ci.CustomProductId);
 
         }
     }
