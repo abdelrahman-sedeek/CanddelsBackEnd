@@ -6,12 +6,16 @@ namespace CanddelsBackEnd.Models
     {
      
         public int OrderId { get; set; }
-        public int productVariantId { get; set; }
+        public int? productVariantId { get; set; }
+        public int? customProductId { get; set; }
+
+
         public int Quantity { get; set; }
         public decimal Total { get; set; }
 
         public virtual Order? Order { get; set; }
         public virtual ProductVariant? productVariant { get; set; }
+        public virtual CustomProduct? customProduct { get; set; }
 
 
     }

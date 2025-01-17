@@ -14,6 +14,7 @@ namespace CanddelsBackEnd.Contexts
         public DbSet<OrderItem> OrderItems { get; set; }
         //public DbSet<Payment> Payments { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<CustomProduct> customProducts { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<ShippingDetail> ShippingDetails { get; set; }
         public CandelContext(DbContextOptions<CandelContext> options)
@@ -25,7 +26,8 @@ namespace CanddelsBackEnd.Contexts
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
+            modelBuilder.Entity<CustomProduct>()
+            .HasKey(cp => cp.Id);
         }
     }
 }

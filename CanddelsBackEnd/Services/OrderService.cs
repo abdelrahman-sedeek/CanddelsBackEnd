@@ -30,7 +30,6 @@ namespace CanddelsBackEnd.Services
 
         public async Task<Order> ConfirmOrderAsync(string sessionId, ShippingDetailsDto shippingDetail)
         {
-            
             var cart = await _cartRepository.GetCartBySessionIdAsync(sessionId);
 
             if (cart == null || !cart.CartItems.Any())
@@ -38,18 +37,17 @@ namespace CanddelsBackEnd.Services
                 throw new Exception("Cart is empty or does not exist.");
             }
 
+            // Check if the shipping details already exist in the database
             var existingDetail = await _context.ShippingDetails
-        .SingleOrDefaultAsync(sd => sd.Email == shippingDetail.Email && sd.PhoneNumber == shippingDetail.PhoneNumber);
+                .SingleOrDefaultAsync(sd => sd.Email == shippingDetail.Email && sd.PhoneNumber == shippingDetail.PhoneNumber);
 
             ShippingDetail detail;
             if (existingDetail != null)
             {
-                // Reuse the existing ShippingDetail
-                detail = existingDetail;
+                detail = existingDetail; // Reuse existing shipping detail
             }
             else
             {
-                // Create a new ShippingDetail
                 detail = new ShippingDetail
                 {
                     Address = shippingDetail.Address,
@@ -66,44 +64,56 @@ namespace CanddelsBackEnd.Services
                 await _context.SaveChangesAsync();
             }
 
-            // Create the order
-            var order = new Order
+            // Calculate the order subtotal and create order items
+            var orderItems = cart.CartItems.Select(ci =>
             {
-                OrderDate = DateTime.UtcNow,
-                SubTotal = (decimal)cart.CartItems.Sum(ci =>
+                if (ci.ProductVariant != null) // Standard product
                 {
                     var discountPercentage = ci.ProductVariant.Product.DiscountPercentage ?? 0;
                     var discountedPrice = discountPercentage > 0
                         ? ci.ProductVariant.Price - (ci.ProductVariant.Price * discountPercentage / 100)
                         : ci.ProductVariant.Price;
 
-                    return discountedPrice * ci.Quantity;
-                }),
-                OrderStatus = "Pending",
-                PaymentStatus = "Unpaid",
-                ShippingDetailId = detail.Id,
-                OrderItems = cart.CartItems.Select(ci =>
+                    return new OrderItem
+                    {
+                        productVariantId = (int)ci.ProductVariantId,
+                        Quantity = ci.Quantity,
+                        Total = (decimal)(discountedPrice * ci.Quantity)
+                    };
+                }
+                else if (ci.CustomProduct != null) // Custom product
                 {
-                    var discountPercentage = ci.ProductVariant.Product.DiscountPercentage;
-                    var discountedPrice = discountPercentage > 0
-                        ? ci.ProductVariant.Price - (ci.ProductVariant.Price * discountPercentage / 100)
-                        : ci.ProductVariant.Price;
+                    // Assume custom products have no discount; you can modify this logic as needed
+                    var customProductPrice = 50; // Define a method to determine custom product price
 
                     return new OrderItem
                     {
-                         productVariantId = ci.ProductVariantId,
+                        customProductId = ci.CustomProductId,
                         Quantity = ci.Quantity,
-                        Total = (decimal)(discountedPrice * ci.Quantity) 
+                        Total = (decimal)(customProductPrice * ci.Quantity)
                     };
-                }).ToList()
+                }
+                else
+                {
+                    throw new Exception("Invalid cart item: neither standard product nor custom product found.");
+                }
+            }).ToList();
+
+            var order = new Order
+            {
+                OrderDate = DateTime.UtcNow,
+                SubTotal = orderItems.Sum(oi => oi.Total),
+                OrderStatus = "Pending",
+                PaymentStatus = "Unpaid",
+                ShippingDetailId = detail.Id,
+                OrderItems = orderItems
             };
 
             await _orderRepository.AddOrderAsync(order);
 
-            
+            // Remove cart items and cart after confirming the order
             _cartRepository.RemoveCartItems(cart.CartItems);
             _cartRepository.RemoveCart(cart);
- 
 
             return order;
         }

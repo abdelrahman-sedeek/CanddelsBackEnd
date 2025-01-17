@@ -18,8 +18,10 @@ namespace CanddelsBackEnd.Repositories.CartRepo
         {
             return await _context.Carts
                 .Include(c => c.CartItems)
-                .ThenInclude(ci => ci.ProductVariant)
-                .ThenInclude(pv => pv.Product)
+                     .ThenInclude(ci => ci.ProductVariant)
+                     .ThenInclude(pv => pv.Product)
+                .Include(cp=>cp.CartItems)
+                    .ThenInclude(cp=>cp.CustomProduct)
                 .SingleOrDefaultAsync(c => c.SessionId == sessionId);
         }
 

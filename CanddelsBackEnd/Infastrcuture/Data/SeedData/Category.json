@@ -1,85 +1,85 @@
 [
-  { 
+  {
     "Name": "for him",
-    "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-    "ImageUrl":"images/img1"
-  
+    "Description": " Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
+    "ImageUrl": "https://localhost:7012/https://localhost:7012/images/img1.jpg.jpg"
+
   },
 
   { 
     "Name": "for her" ,
     "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-    "ImageUrl":"images/img1"
+    "ImageUrl":"https://localhost:7012/images/img1.jpg"
 
   },
 
   { 
     "Name": "garden collection" ,
       "Dscription":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-      "ImageUrl":"images/img1"
+      "ImageUrl":"https://localhost:7012/images/img1.jpg"
   
   },
 
   { 
     "Name": "love collection",
     "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-    "ImageUrl":"images/img1"
+    "ImageUrl":"https://localhost:7012/images/img1.jpg"
   
   },
 
   {
     "Name": "sea collection" ,
     "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-    "ImageUrl":"images/img1"
+    "ImageUrl":"https://localhost:7012/images/img1.jpg"
   
   },
 
   { 
     "Name": "back to school",
      "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-     "ImageUrl":"images/img1"
+     "ImageUrl":"https://localhost:7012/images/img1.jpg"
   
   },
 
   { 
     "Name": "indulge collection" ,
       "Decription":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-      "ImageUrl":"images/img1"
+      "ImageUrl":"https://localhost:7012/images/img1.jpg"
   
   },
   
   { 
     "Name": "festive" ,
     "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-    "ImageUrl":"images/img1"
+    "ImageUrl":"https://localhost:7012/images/img1.jpg"
   
   },
 
   { 
     "Name": "freshner" ,     
     "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-    "ImageUrl":"images/img1"
+    "ImageUrl":"https://localhost:7012/images/img1.jpg"
   
   },
 
   { 
     "Name": "car diffuser" ,
     "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-    "ImageUrl":"images/img1"
+    "ImageUrl":"https://localhost:7012/images/img1.jpg"
   
   },
 
   { 
     "Name": "light candle",
      "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-     "ImageUrl":"images/img1"
+     "ImageUrl":"https://localhost:7012/images/img1.jpg"
   
   },
 
   {
     "Name": "tea light" ,
      "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-     "ImageUrl":"images/img1"
+     "ImageUrl":"https://localhost:7012/images/img1.jpg"
   }
     
 

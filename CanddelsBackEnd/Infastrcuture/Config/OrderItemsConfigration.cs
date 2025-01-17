@@ -21,6 +21,10 @@ namespace CanddelsBackEnd.Infastrcuture.Config
             builder.HasOne(oi => oi.productVariant)
              .WithOne(pv => pv.OrderItem)
              .HasForeignKey<OrderItem>(oi => oi.productVariantId);
+            
+            builder.HasOne(oi => oi.customProduct)
+             .WithOne(pv => pv.OrderItem)
+             .HasForeignKey<OrderItem>(oi => oi.customProductId);
 
 
 
