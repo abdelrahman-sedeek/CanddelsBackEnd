@@ -12,8 +12,6 @@
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
 
-        //public int OrderId { get; set; }
-        //public Order Order { get; set; }
     }
 
 }

@@ -88,16 +88,17 @@ namespace CanddelsBackEnd.Services
                     var discountedPrice = discountPercentage > 0
                         ? ci.ProductVariant.Price - (ci.ProductVariant.Price * discountPercentage / 100)
                         : ci.ProductVariant.Price;
-
+                    ci.ProductVariant.StockQuantity--;
                     return new OrderItem
                     {
-                         productVariantId = ci.ProductVariantId,
+                        productVariantId = ci.ProductVariantId,
                         Quantity = ci.Quantity,
-                        Total = (decimal)(discountedPrice * ci.Quantity) 
+                        Total = (decimal)(discountedPrice * ci.Quantity),
                     };
                 }).ToList()
             };
 
+            
             await _orderRepository.AddOrderAsync(order);
 
             

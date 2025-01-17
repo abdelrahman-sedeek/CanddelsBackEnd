@@ -1,4 +1,4 @@
-﻿namespace CanddelsBackEnd.Controllers
+﻿namespace CanddelsBackEnd.Dtos
 {
     public class UpdateOrderDto
     {
