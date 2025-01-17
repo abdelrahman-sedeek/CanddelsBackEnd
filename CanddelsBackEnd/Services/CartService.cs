@@ -138,6 +138,8 @@ namespace CanddelsBackEnd.Services
                         ci.CustomProduct.Scent3,
                         ci.CustomProduct.Scent4,
                         ci.CustomProduct.Weight,
+                        ci.Quantity
+                 
 
 
                     } as object;
