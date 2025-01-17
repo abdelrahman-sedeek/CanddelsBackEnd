@@ -18,10 +18,8 @@ namespace CanddelsBackEnd.Specifications
 
         }
 
-
-
-
-        }
-              
     }
+
+              
+}
 
