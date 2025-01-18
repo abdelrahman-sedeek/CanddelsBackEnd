@@ -27,7 +27,7 @@ namespace CanddelsBackEnd.Controllers
         [HttpPost("confirm-order")]
         public async Task<IActionResult> ConfirmOrder([FromBody] ShippingDetailsDto shippingDetail)
         {
-            if(!Request.Headers.TryGetValue("SessionId",out var sessionIdValue))
+            if(!Request.Cookies.TryGetValue("SessionId",out var sessionIdValue))
             {
                 return BadRequest(new { Error = "SessionId header is missing or invalid." });
             }

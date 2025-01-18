@@ -74,6 +74,8 @@ namespace CanddelsBackEnd.Services
                         ? ci.ProductVariant.Price - (ci.ProductVariant.Price * discountPercentage / 100)
                         : ci.ProductVariant.Price;
 
+                    ci.ProductVariant.StockQuantity-=ci.Quantity;
+
                     return new OrderItem
                     {
                         productVariantId = (int)ci.ProductVariantId,
@@ -83,17 +85,7 @@ namespace CanddelsBackEnd.Services
                 }
                 else if (ci.CustomProduct != null) // Custom product
                 {
-                    var discountPercentage = ci.ProductVariant.Product.DiscountPercentage;
-                    var discountedPrice = discountPercentage > 0
-                        ? ci.ProductVariant.Price - (ci.ProductVariant.Price * discountPercentage / 100)
-                        : ci.ProductVariant.Price;
-                    ci.ProductVariant.StockQuantity--;
-                    return new OrderItem
-                    {
-                        productVariantId = ci.ProductVariantId,
-                        Quantity = ci.Quantity,
-                        Total = (decimal)(discountedPrice * ci.Quantity),
-
+                   
                     // Assume custom products have no discount; you can modify this logic as needed
                     var customProductPrice = 50; // Define a method to determine custom product price
 

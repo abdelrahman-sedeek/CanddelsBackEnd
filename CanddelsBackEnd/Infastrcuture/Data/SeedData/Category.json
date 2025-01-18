@@ -2,7 +2,7 @@
   {
     "Name": "for him",
     "Description": " Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-    "ImageUrl": "https://localhost:7012/https://localhost:7012/images/img1.jpg.jpg"
+    "ImageUrl": "https://localhost:7012/images/img1.jpg"
 
   },
 
@@ -13,18 +13,18 @@
 
   },
 
-  { 
-    "Name": "garden collection" ,
-      "Dscription":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-      "ImageUrl":"https://localhost:7012/images/img1.jpg"
-  
+  {
+    "Name": "garden collection",
+    "Dscription": " Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg"
+
   },
 
-  { 
+  {
     "Name": "love collection",
-    "Description":" Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
-    "ImageUrl":"https://localhost:7012/images/img1.jpg"
-  
+    "Description": " Our Sea Breeze Collection Scented Candles are the perfect way to bring the",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg"
+
   },
 
   {

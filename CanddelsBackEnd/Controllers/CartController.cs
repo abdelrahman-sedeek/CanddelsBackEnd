@@ -1,11 +1,8 @@
-using Azure.Core;
-using Azure;
 using CanddelsBackEnd.Dtos;
 using CanddelsBackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using CanddelsBackEnd.Contexts;
-using CanddelsBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]

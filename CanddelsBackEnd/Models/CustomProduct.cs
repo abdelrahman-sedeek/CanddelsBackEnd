@@ -12,6 +12,6 @@ namespace CanddelsBackEnd.Models
         public int Weight { get; set; }
         public virtual CartItem CartItem { get; set; }
 
-        public virtual OrderItem OrderItem { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }
