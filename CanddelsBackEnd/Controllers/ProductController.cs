@@ -172,10 +172,8 @@ namespace CanddelsBackEnd.Controllers
             if (product.Image is not null)
             {
               
-                existingProduct.ImageUrl = Path.Combine("images", uniqueFileName);
                 var imageUrl = await _fileUploadService.UploadImage(product.Image, "images");
                 existingProduct.ImageUrl = imageUrl;
-                existingProduct.ImageUrl = Path.Combine("https://localhost:7012/images", uniqueFileName);
             }
 
             existingProduct.Name = product.Name;
