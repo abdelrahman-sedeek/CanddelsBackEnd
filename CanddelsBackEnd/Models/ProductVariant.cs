@@ -17,12 +17,9 @@ namespace CanddelsBackEnd.Models
 
         public  Product Product { get; set; }
 
-        public int? CartItemId { get; set; }
         public virtual CartItem CartItem { get; set; }
 
-        public int? OrderItemId { get; set; }
-        public virtual OrderItem OrderItem { get; set; }
-
+        public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public decimal? PriceAfterDiscount {  get; set; }
        
 

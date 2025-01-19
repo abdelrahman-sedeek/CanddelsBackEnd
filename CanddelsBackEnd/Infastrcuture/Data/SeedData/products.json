@@ -12,7 +12,7 @@
     "CategoryId": 1,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": true
   },
   {
@@ -29,7 +29,7 @@
     "DiscountPercentage": null,
 
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": false
   },
   {
@@ -45,7 +45,7 @@
     "CategoryId": 3,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": true
   },
   {
@@ -61,7 +61,7 @@
     "CategoryId": 4,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": false
   },
   {
@@ -77,7 +77,7 @@
     "CategoryId": 5,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": true
   },
   {
@@ -93,7 +93,7 @@
     "CategoryId": 6,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": false
   },
   {
@@ -109,7 +109,7 @@
     "CategoryId": 7,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": true
   },
   {
@@ -125,7 +125,7 @@
     "CategoryId": 8,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": false
   },
   {
@@ -141,8 +141,8 @@
     "CategoryId": 9,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
-    "IsDailyOffer": false
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
+s    "IsDailyOffer": false
   },
   {
     "Name": "blue",
@@ -157,7 +157,7 @@
     "CategoryId": 10,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": false
   },
   {
@@ -173,7 +173,7 @@
     "CategoryId": 11,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": false
   },
   {
@@ -189,7 +189,7 @@
     "CategoryId": 12,
     "DiscountPercentage": null,
     "DiscountId": null,
-    "ImageUrl": "images/img1",
+    "ImageUrl": "https://localhost:7012/images/img1.jpg",
     "IsDailyOffer": false
   }
 ]

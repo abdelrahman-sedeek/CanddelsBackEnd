@@ -24,8 +24,8 @@ namespace CanddelsBackEnd.Dtos
         public decimal LowestPriceAfterDiscount { get; set; }
         public string CategoryName {  get; set; }
         public string CategoryId { get; set; }
+        public decimal? DiscountPercentage { get; set; }
 
-
-
+        
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CanddelsBackEnd.Migrations
 {
     [DbContext(typeof(CandelContext))]
-    [Migration("20241228190010_Initial")]
-    partial class Initial
+    [Migration("20250110205421_AddCustomOrder")]
+    partial class AddCustomOrder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,7 +59,10 @@ namespace CanddelsBackEnd.Migrations
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductVariantId")
+                    b.Property<int?>("CustomProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductVariantId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -69,8 +72,13 @@ namespace CanddelsBackEnd.Migrations
 
                     b.HasIndex("CartId");
 
+                    b.HasIndex("CustomProductId")
+                        .IsUnique()
+                        .HasFilter("[CustomProductId] IS NOT NULL");
+
                     b.HasIndex("ProductVariantId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ProductVariantId] IS NOT NULL");
 
                     b.ToTable("CartItems");
                 });
@@ -96,6 +104,35 @@ namespace CanddelsBackEnd.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("CanddelsBackEnd.Models.CustomProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Scent1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Scent2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Scent3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Scent4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("customProducts");
                 });
 
             modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
@@ -149,12 +186,23 @@ namespace CanddelsBackEnd.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("productVariantId")
+                    b.Property<int?>("customProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("productVariantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("customProductId")
+                        .IsUnique()
+                        .HasFilter("[customProductId] IS NOT NULL");
+
+                    b.HasIndex("productVariantId")
+                        .IsUnique()
+                        .HasFilter("[productVariantId] IS NOT NULL");
 
                     b.ToTable("OrderItems");
                 });
@@ -230,12 +278,6 @@ namespace CanddelsBackEnd.Migrations
                         .HasPrecision(18)
                         .HasColumnType("decimal(18,0)");
 
-                    b.Property<int?>("CartItemId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderItemId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -253,10 +295,6 @@ namespace CanddelsBackEnd.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderItemId")
-                        .IsUnique()
-                        .HasFilter("[OrderItemId] IS NOT NULL");
 
                     b.HasIndex("ProductId");
 
@@ -315,13 +353,17 @@ namespace CanddelsBackEnd.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CanddelsBackEnd.Models.CustomProduct", "CustomProduct")
+                        .WithOne("CartItem")
+                        .HasForeignKey("CanddelsBackEnd.Models.CartItem", "CustomProductId");
+
                     b.HasOne("CanddelsBackEnd.Models.ProductVariant", "ProductVariant")
                         .WithOne("CartItem")
-                        .HasForeignKey("CanddelsBackEnd.Models.CartItem", "ProductVariantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CanddelsBackEnd.Models.CartItem", "ProductVariantId");
 
                     b.Navigation("Cart");
+
+                    b.Navigation("CustomProduct");
 
                     b.Navigation("ProductVariant");
                 });
@@ -345,7 +387,19 @@ namespace CanddelsBackEnd.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CanddelsBackEnd.Models.CustomProduct", "customProduct")
+                        .WithOne("OrderItem")
+                        .HasForeignKey("CanddelsBackEnd.Models.OrderItem", "customProductId");
+
+                    b.HasOne("CanddelsBackEnd.Models.ProductVariant", "productVariant")
+                        .WithOne("OrderItem")
+                        .HasForeignKey("CanddelsBackEnd.Models.OrderItem", "productVariantId");
+
                     b.Navigation("Order");
+
+                    b.Navigation("customProduct");
+
+                    b.Navigation("productVariant");
                 });
 
             modelBuilder.Entity("CanddelsBackEnd.Models.Product", b =>
@@ -361,15 +415,9 @@ namespace CanddelsBackEnd.Migrations
 
             modelBuilder.Entity("CanddelsBackEnd.Models.ProductVariant", b =>
                 {
-                    b.HasOne("CanddelsBackEnd.Models.OrderItem", "OrderItem")
-                        .WithOne("productVariant")
-                        .HasForeignKey("CanddelsBackEnd.Models.ProductVariant", "OrderItemId");
-
                     b.HasOne("CanddelsBackEnd.Models.Product", "Product")
                         .WithMany("productVariants")
                         .HasForeignKey("ProductId");
-
-                    b.Navigation("OrderItem");
 
                     b.Navigation("Product");
                 });
@@ -384,14 +432,18 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("products");
                 });
 
+            modelBuilder.Entity("CanddelsBackEnd.Models.CustomProduct", b =>
+                {
+                    b.Navigation("CartItem")
+                        .IsRequired();
+
+                    b.Navigation("OrderItem")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("CanddelsBackEnd.Models.OrderItem", b =>
-                {
-                    b.Navigation("productVariant");
                 });
 
             modelBuilder.Entity("CanddelsBackEnd.Models.Product", b =>
@@ -402,6 +454,9 @@ namespace CanddelsBackEnd.Migrations
             modelBuilder.Entity("CanddelsBackEnd.Models.ProductVariant", b =>
                 {
                     b.Navigation("CartItem")
+                        .IsRequired();
+
+                    b.Navigation("OrderItem")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

@@ -1,11 +1,8 @@
-using Azure.Core;
-using Azure;
 using CanddelsBackEnd.Dtos;
 using CanddelsBackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using CanddelsBackEnd.Contexts;
-using CanddelsBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
 [ApiController]
@@ -52,8 +49,28 @@ public class CartController : ControllerBase
     [HttpPost("add")]
     public async Task<IActionResult> AddToCart([FromBody] AddToCartRequest addToCartRequest)
     {
-        var result = await _cartService.AddToCartAsync(addToCartRequest);
-        return Ok(new { message = result });
+        if (addToCartRequest.ProductVariantId != null)
+        {
+            var result = await _cartService.AddToCartAsync(addToCartRequest);
+            return Ok(new { message = result });
+        }
+        else
+        {
+            return BadRequest(new { message = "ProductVariantId is required for normal products." });
+        }
+    }
+    [HttpPost("add-custom")]
+    public async Task<IActionResult> AddCustomToCart([FromBody] AddCustomProductToCartDto addToCartRequest)
+    {
+
+        if (addToCartRequest == null)
+        {
+            return BadRequest("custom product is null ");
+
+        }  
+            var result = await _cartService.AddCustomProductToCartAsync(addToCartRequest);
+            return Ok(new { message = result });
+      
     }
 
     [HttpDelete("remove")]

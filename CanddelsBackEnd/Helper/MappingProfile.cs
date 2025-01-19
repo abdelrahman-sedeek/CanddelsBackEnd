@@ -26,7 +26,6 @@ namespace CanddelsBackEnd.Helper
             CreateMap<Product, ProductDashboardDto>()
                .ForMember(dest => dest.Variants, opt => opt.MapFrom(src => src.productVariants));
 
-            CreateMap<ProductVariant, ProductVariantDto>();
 
 
 

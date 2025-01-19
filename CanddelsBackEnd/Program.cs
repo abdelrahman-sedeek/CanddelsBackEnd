@@ -13,6 +13,7 @@ using CanddelsBackEnd.Helper;
 using CanddelsBackEnd.Repositories.CartRepo;
 using CanddelsBackEnd.Repositories.OrderRepo;
 using CanddelsBackEnd.Repositories.ShippingDetailsRepo;
+using Microsoft.Extensions.Caching.Memory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,21 +26,10 @@ builder.Services.Configure<AdminCredentials>(builder.Configuration.GetSection("A
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 
-builder.Services.AddScoped<AdminCredentialsSeeder>();
-
-builder.Services.AddScoped<AdminCredentialsManager>();
-
-
-builder.Services.AddScoped<CartHelper>();
-builder.Services.AddHostedService<CartCleanupService>();
-
-
-
-builder.Services.AddScoped<IPasswordHasher<AdminCredentials>, PasswordHasher<AdminCredentials>>();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
 
-builder.Services.AddSingleton<JwtTokenService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -59,7 +49,7 @@ builder.Services.AddAuthentication()
 builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200").AllowCredentials();
+        policy.WithOrigins("http://localhost:4200").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
     })
 );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -74,15 +64,16 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IShippingDetailsRepo, ShippingDetailsRepo>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddSingleton<JwtTokenService>();
+builder.Services.AddScoped<AdminCredentialsSeeder>();
+builder.Services.AddScoped<AdminCredentialsManager>();
+builder.Services.AddScoped<IPasswordHasher<AdminCredentials>, PasswordHasher<AdminCredentials>>();
 builder.Services.AddScoped<CartService>();
-<<<<<<< Updated upstream
-=======
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<CartHelper>();
 builder.Services.AddHostedService<CartCleanupService>();
 builder.Services.AddScoped<FileUploadService>();
->>>>>>> Stashed changes
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -105,6 +96,7 @@ app.UseCookiePolicy();
 app.UseRouting();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors("CorsPolicy");
 app.MapControllers();

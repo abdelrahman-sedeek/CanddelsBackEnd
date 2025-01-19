@@ -22,6 +22,8 @@
         public string CategoryName { get; set; }
         public string CategoryId { get; set; }
 
+        public decimal? DiscountPercentage {  get; set; }
+
         public List<ProductVariantDto> Variants { get; set; } = new List<ProductVariantDto>();
     }
 }

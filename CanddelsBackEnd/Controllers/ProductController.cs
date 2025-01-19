@@ -134,43 +134,8 @@ namespace CanddelsBackEnd.Controllers
             // Check if the product has an image
             if (product.Image != null)
             {
-<<<<<<< Updated upstream
-                // Validate Image Type and Size
-                var allowedTypes = new[] { "image/jpeg", "image/png", "image/jpg" };
-                if (!allowedTypes.Contains(product.Image.ContentType))
-                {
-                    return BadRequest("Invalid file type. Only JPEG, PNG, and JPG are allowed.");
-                }
 
-                if (product.Image.Length > 5 * 1024 * 1024) // 5MB size limit
-                {
-                    return BadRequest("File size exceeds 5MB.");
-                }
-
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
-
-                var filepath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                // Ensure directory exists
-                Directory.CreateDirectory(uploadsFolder);
-
-                try
-                {
-                    using (var fileStream = new FileStream(filepath, FileMode.Create))
-                    {
-                        await product.Image.CopyToAsync(fileStream);
-                    }
-                    // Construct the image URL (relative path)
-                    imageUrl = Path.Combine("images", uniqueFileName);
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, $"Error saving the image: {ex.Message}");
-                }
-=======
                 imageUrl = await _fileUploadService.UploadImage(product.Image, "images");
->>>>>>> Stashed changes
             }
 
             var Addproduct = new Product()
@@ -206,27 +171,14 @@ namespace CanddelsBackEnd.Controllers
 
             if (product.Image is not null)
             {
-<<<<<<< Updated upstream
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
-
-                var filepath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                Directory.CreateDirectory(uploadsFolder);
-
-                using (var filestream = new FileStream(filepath, FileMode.Create))
-                {
-                    await product.Image.CopyToAsync(filestream);
-                }
-
+              
                 existingProduct.ImageUrl = Path.Combine("images", uniqueFileName);
-=======
                 var imageUrl = await _fileUploadService.UploadImage(product.Image, "images");
                 existingProduct.ImageUrl = imageUrl;
->>>>>>> Stashed changes
+                existingProduct.ImageUrl = Path.Combine("https://localhost:7012/images", uniqueFileName);
             }
 
-            existingProduct.Name = product.Name ;
+            existingProduct.Name = product.Name;
             existingProduct.Description = product.Description ?? existingProduct.Description;
             existingProduct.CategoryId = product.CategoryId;
             existingProduct.Benfits = product.Benefits ?? existingProduct.Benfits;
@@ -330,7 +282,9 @@ namespace CanddelsBackEnd.Controllers
                 return NotFound(ex.Message);
             }
         }
+       
 
+   
     }
 
 }

@@ -117,28 +117,6 @@ namespace CanddelsBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderItems",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    productVariantId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProductVariants",
                 columns: table => new
                 {
@@ -149,18 +127,11 @@ namespace CanddelsBackEnd.Migrations
                     Weight = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: true),
-                    CartItemId = table.Column<int>(type: "int", nullable: true),
-                    OrderItemId = table.Column<int>(type: "int", nullable: true),
                     PriceAfterDiscount = table.Column<decimal>(type: "decimal(5,2)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductVariants", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductVariants_OrderItems_OrderItemId",
-                        column: x => x.OrderItemId,
-                        principalTable: "OrderItems",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductVariants_Products_ProductId",
                         column: x => x.ProductId,
@@ -195,6 +166,34 @@ namespace CanddelsBackEnd.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    productVariantId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_ProductVariants_productVariantId",
+                        column: x => x.productVariantId,
+                        principalTable: "ProductVariants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_CartId",
                 table: "CartItems",
@@ -212,6 +211,12 @@ namespace CanddelsBackEnd.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_productVariantId",
+                table: "OrderItems",
+                column: "productVariantId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_ShippingDetailId",
                 table: "Orders",
                 column: "ShippingDetailId");
@@ -220,13 +225,6 @@ namespace CanddelsBackEnd.Migrations
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductVariants_OrderItemId",
-                table: "ProductVariants",
-                column: "OrderItemId",
-                unique: true,
-                filter: "[OrderItemId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductVariants_ProductId",
@@ -241,25 +239,25 @@ namespace CanddelsBackEnd.Migrations
                 name: "CartItems");
 
             migrationBuilder.DropTable(
-                name: "Carts");
-
-            migrationBuilder.DropTable(
-                name: "ProductVariants");
-
-            migrationBuilder.DropTable(
                 name: "OrderItems");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "ProductVariants");
 
             migrationBuilder.DropTable(
                 name: "ShippingDetails");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
         }
     }
 }
