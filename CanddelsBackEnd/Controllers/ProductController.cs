@@ -4,6 +4,7 @@ using CanddelsBackEnd.Helper;
 using CanddelsBackEnd.Models;
 using CanddelsBackEnd.Repositories.GenericRepo;
 using CanddelsBackEnd.Repositories.PorductRepo;
+using CanddelsBackEnd.Services;
 using CanddelsBackEnd.Specifications;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting.Internal;
@@ -16,7 +17,7 @@ namespace CanddelsBackEnd.Controllers
     {
     
         private readonly IproductRepository _repository;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly FileUploadService _fileUploadService;
         private readonly IGenericRepository<Product> _productRepo;
         private readonly IGenericRepository<ProductVariant> _productVariantRepo;
         private readonly IMapper _mapper;
@@ -25,12 +26,12 @@ namespace CanddelsBackEnd.Controllers
             IGenericRepository<Product> productRepo,
             IGenericRepository<ProductVariant> productVariantRepo, 
             IproductRepository repository,
-            IWebHostEnvironment webHostEnvironment,IMapper mapper)
+            FileUploadService fileUploadService,IMapper mapper)
         {
             _productRepo = productRepo;
             _productVariantRepo = productVariantRepo;
             _repository = repository;
-            _webHostEnvironment = webHostEnvironment;
+            _fileUploadService = fileUploadService;
             _mapper = mapper;
         } 
         [HttpGet]
@@ -80,7 +81,7 @@ namespace CanddelsBackEnd.Controllers
         {
             var spec = new ProductSpesification();
             var products = await _productRepo.GetAllWithSpecAsync(spec);
-            var topProducts = products.Take(6).ToList();
+            var topProducts = products.Take(3).ToList();
             var productsToReturn = _mapper.Map<List<Product>, List<ProductToReturnDto>>(topProducts);
 
             return Ok(productsToReturn);
@@ -133,39 +134,8 @@ namespace CanddelsBackEnd.Controllers
             // Check if the product has an image
             if (product.Image != null)
             {
-                // Validate Image Type and Size
-                var allowedTypes = new[] { "image/jpeg", "image/png", "image/jpg" };
-                if (!allowedTypes.Contains(product.Image.ContentType))
-                {
-                    return BadRequest("Invalid file type. Only JPEG, PNG, and JPG are allowed.");
-                }
 
-                if (product.Image.Length > 5 * 1024 * 1024) // 5MB size limit
-                {
-                    return BadRequest("File size exceeds 5MB.");
-                }
-
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
-
-                var filepath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                // Ensure directory exists
-                Directory.CreateDirectory(uploadsFolder);
-
-                try
-                {
-                    using (var fileStream = new FileStream(filepath, FileMode.Create))
-                    {
-                        await product.Image.CopyToAsync(fileStream);
-                    }
-                    // Construct the image URL (relative path)
-                    imageUrl = Path.Combine("https://localhost:7012" + "images", uniqueFileName);
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, $"Error saving the image: {ex.Message}");
-                }
+                imageUrl = await _fileUploadService.UploadImage(product.Image, "images");
             }
 
             var Addproduct = new Product()
@@ -201,18 +171,10 @@ namespace CanddelsBackEnd.Controllers
 
             if (product.Image is not null)
             {
-                var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + product.Image.FileName;
-
-                var filepath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                Directory.CreateDirectory(uploadsFolder);
-
-                using (var filestream = new FileStream(filepath, FileMode.Create))
-                {
-                    await product.Image.CopyToAsync(filestream);
-                }
-
+              
+                existingProduct.ImageUrl = Path.Combine("images", uniqueFileName);
+                var imageUrl = await _fileUploadService.UploadImage(product.Image, "images");
+                existingProduct.ImageUrl = imageUrl;
                 existingProduct.ImageUrl = Path.Combine("https://localhost:7012/images", uniqueFileName);
             }
 

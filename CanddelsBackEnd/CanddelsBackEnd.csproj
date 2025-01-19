@@ -26,6 +26,7 @@
   <ItemGroup>
     <Folder Include="Infastrcuture\Data\SeedData\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
 </Project>

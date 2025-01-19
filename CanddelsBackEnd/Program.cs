@@ -9,12 +9,6 @@ using CanddelsBackEnd.Infastrcuture;
 using CanddelsBackEnd.Repositories.GenericRepo;
 using CanddelsBackEnd.Repositories.PorductRepo;
 using CanddelsBackEnd.Dtos;
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using AutoMapper;
-using System;
 using CanddelsBackEnd.Helper;
 using CanddelsBackEnd.Repositories.CartRepo;
 using CanddelsBackEnd.Repositories.OrderRepo;
@@ -79,6 +73,7 @@ builder.Services.AddScoped<EmailService>();
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<CartHelper>();
 builder.Services.AddHostedService<CartCleanupService>();
+builder.Services.AddScoped<FileUploadService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
