@@ -7,7 +7,7 @@ namespace CanddelsBackEnd.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string? Scent { get; set; }     
+        public string? ScentId { get; set; }     
         public bool IsBestSeller { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsDailyOffer { get; set; }

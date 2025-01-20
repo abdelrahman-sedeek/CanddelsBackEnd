@@ -28,7 +28,7 @@ namespace CanddelsBackEnd.Repositories.PorductRepo
 
         public async Task<IReadOnlyList<string>> GetScentsAsync()
         {
-            return await _context.Products.Select(p => p.Scent).Distinct().ToListAsync();
+            return await _context.Products.Select(p => p.Scent.Name).Distinct().ToListAsync();
         }
     }
 }

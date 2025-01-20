@@ -13,7 +13,7 @@ namespace CanddelsBackEnd.Dtos
         public string? Description { get; set; }
         public string? Features { get; set; }
         public string? Benfits { get; set; }
-        public string? Scent { get; set; }
+        public int ScentId { get; set; }
 
         public bool IsBestSeller { get; set; }
         public bool IsDailyOffer { get; set; }

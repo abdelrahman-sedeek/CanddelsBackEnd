@@ -147,7 +147,7 @@ namespace CanddelsBackEnd.Controllers
                 DiscountPercentage = product.DiscountPercentage,
                 Features = product.Features,
                 CreatedAt= DateTime.Now,
-                Scent = product.Scent,
+                ScentId = product.ScentId,
                 IsBestSeller = product.IsBestSeller,
                 IsDailyOffer= product.IsDailyOffer,
                 Name = product.Name,
@@ -183,7 +183,7 @@ namespace CanddelsBackEnd.Controllers
             existingProduct.Features = product.Features ?? existingProduct.Features;
             existingProduct.CalltoAction = product.CallToAction ?? existingProduct.CalltoAction;
             existingProduct.DiscountPercentage = product.DiscountPercentage;
-            existingProduct.Scent = product.Scent ;
+            existingProduct.Scent.Name = product.Scent ;
             existingProduct.IsBestSeller = product.IsBestSeller ;
             existingProduct.IsDailyOffer = product.IsDailyOffer;
 

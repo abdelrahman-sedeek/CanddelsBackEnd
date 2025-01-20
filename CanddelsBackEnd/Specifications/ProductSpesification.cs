@@ -15,7 +15,7 @@ namespace CanddelsBackEnd.Specifications
         public ProductSpesification(ProductParameters ProductPrams):
             base(x=>
             (!ProductPrams.CategoryIds.Any() || ProductPrams.CategoryIds.Contains(x.CategoryId)) &&
-            (!ProductPrams.Scents.Any()|| ProductPrams.Scents.Any(scent=>x.Scent.Contains(scent)))
+            (!ProductPrams.Scents.Any()|| ProductPrams.Scents.Any(scent=>x.Scent.Name.Contains(scent)))
             )
         {
             AddInclude(X => X.productVariants);
