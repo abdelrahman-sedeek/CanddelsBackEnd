@@ -14,6 +14,7 @@ namespace CanddelsBackEnd.Contexts
         public DbSet<OrderItem> OrderItems { get; set; }
         //public DbSet<Payment> Payments { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Scent> Scents { get; set; }
         public DbSet<CustomProduct> customProducts { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<ShippingDetail> ShippingDetails { get; set; }

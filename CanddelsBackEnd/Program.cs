@@ -14,6 +14,7 @@ using CanddelsBackEnd.Repositories.CartRepo;
 using CanddelsBackEnd.Repositories.OrderRepo;
 using CanddelsBackEnd.Repositories.ShippingDetailsRepo;
 using Microsoft.Extensions.Caching.Memory;
+using CanddelsBackEnd.Repositories.ScentsRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +59,7 @@ Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddDbContext<CandelContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddScoped<ICartRepository,CartRepository>();
+builder.Services.AddScoped<IScentRepository, ScentRepository>();
 builder.Services.AddScoped<IproductRepository, ProductRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();

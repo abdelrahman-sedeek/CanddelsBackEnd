@@ -12,7 +12,7 @@ namespace CanddelsBackEnd.Models
         public string? Description { get; set; }
         public string? Features { get; set; }   
         public string? Benfits { get; set; }   
-        public string? Scent { get; set; }
+        
 
         [DefaultValue(false)] 
         public bool IsBestSeller{ get; set; }
@@ -36,7 +36,10 @@ namespace CanddelsBackEnd.Models
 
 
         public int CategoryId { get; set; }
+        public int ScentId { get; set; }
+
         public virtual Category Category { get; set; }
+        public virtual Scent Scent { get; set; }
 
     }
 }
