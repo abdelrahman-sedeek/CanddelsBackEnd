@@ -36,7 +36,7 @@ namespace CanddelsBackEnd.Controllers
         }
 
   
-        [HttpPost]
+        [HttpPost("add-scent")]
         public async Task<ActionResult<Scent>> AddScent(Scent scent)
         {
             var addedScent = await _scentRepository.AddScentAsync(scent);
@@ -44,7 +44,7 @@ namespace CanddelsBackEnd.Controllers
         }
 
 
-        [HttpPut("{id}")]
+        [HttpPut("update-scent/{id}")]
         public async Task<ActionResult<Scent>> UpdateScent(int id, Scent scent)
         {
             if (id != scent.Id)
@@ -61,7 +61,7 @@ namespace CanddelsBackEnd.Controllers
             return Ok(updatedScent);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<ActionResult<bool>> DeleteScent(int id)
         {
             var result = await _scentRepository.DeleteScentAsync(id);
