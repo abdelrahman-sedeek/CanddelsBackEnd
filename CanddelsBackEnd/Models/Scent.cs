@@ -7,5 +7,6 @@
         public string? ImageUrl { get; set; }
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
+        public virtual ICollection<CustomProductScent> CustomProductScents { get; set; } = new List<CustomProductScent>();
     }
 }

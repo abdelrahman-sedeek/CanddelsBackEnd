@@ -1,7 +1,8 @@
-﻿using CanddelsBackEnd.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using CanddelsBackEnd.Models;
+using Microsoft.EntityFrameworkCore;
+using CanddelsBackEnd.Services;
+using CanddelsBackEnd.Contexts;
 
 namespace CanddelsBackEnd.Controllers
 {
@@ -9,62 +10,60 @@ namespace CanddelsBackEnd.Controllers
     [ApiController]
     public class MessageController : ControllerBase
     {
-        private readonly IWebHostEnvironment _environment;
-        private readonly string _filePath;
-        public MessageController(IWebHostEnvironment environment)
+        private readonly CandelContext _context;
+        private readonly FileUploadService _fileUploadService;
+
+        public MessageController(CandelContext context, FileUploadService fileUploadService)
         {
-            _environment = environment;
-            _filePath = Path.Combine(_environment.WebRootPath, "data", "message.json");
-
+            _context = context;
+            _fileUploadService = fileUploadService;
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetMessage()
         {
-
-            if(!System.IO.File.Exists(_filePath))
-            {
-                return NotFound("file not exist");
-            }
-
-            var json = await System.IO.File.ReadAllTextAsync(_filePath);
-
-            var message = JsonSerializer.Deserialize<MessageModel>(json);
-
+            var message = await _context.Messages.FirstOrDefaultAsync();
             if (message == null)
             {
-                return BadRequest(new { Error = "Failed to parse the message file." });
+                return NotFound("No message found.");
             }
-
             return Ok(message);
-
-
         }
-
 
         [HttpPost("update-message")]
-        public async Task<IActionResult> UpdateMessage([FromBody]MessageModel newMessage)
+        public async Task<IActionResult> UpdateMessage([FromForm] string? text, IFormFile? image)
         {
-            if(newMessage == null && string.IsNullOrEmpty(newMessage?.Message))
+            var existingMessage = await _context.Messages.FirstOrDefaultAsync();
+            if (existingMessage == null)
             {
-                return BadRequest("Invalid message content.");
-
+                existingMessage = new Message();
+                _context.Messages.Add(existingMessage);
             }
 
-            var json = JsonSerializer.Serialize(newMessage,new JsonSerializerOptions { WriteIndented=true});
-            var directory = Path.GetDirectoryName(_filePath);
-            
-            if(!Directory.Exists(directory))
+            // Update the text (even if it's empty)
+            existingMessage.Text = text is null ? "":text;
+
+            // Handle image update or removal
+            if (image != null)
             {
-                Directory.CreateDirectory(directory);
+                try
+                {
+                    var imageUrl = await _fileUploadService.UploadImage(image, "messages");
+                    existingMessage.ImageUrl = imageUrl;
+                }
+                catch (ArgumentException ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            else
+            {
+                // If no image is provided, clear the existing image URL
+                existingMessage.ImageUrl = null;
             }
 
-            await System.IO.File.WriteAllTextAsync(_filePath, json);
-
-
-            return Ok();
+            await _context.SaveChangesAsync();
+            return Ok(existingMessage);
         }
-
     }
 }

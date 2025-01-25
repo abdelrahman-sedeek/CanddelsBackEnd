@@ -1,7 +1,9 @@
 ﻿namespace CanddelsBackEnd.Models
 {
-    public class MessageModel
+    public class Message
     {
-        public string? Message {  get; set; }
+        public int Id { get; set; }
+        public string? Text { get; set; } 
+        public string? ImageUrl { get; set; } 
     }
 }

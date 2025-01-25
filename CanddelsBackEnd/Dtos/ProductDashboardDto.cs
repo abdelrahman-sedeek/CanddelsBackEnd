@@ -1,10 +1,12 @@
-﻿namespace CanddelsBackEnd.Dtos
+﻿using CanddelsBackEnd.Models;
+
+namespace CanddelsBackEnd.Dtos
 {
     public class ProductDashboardDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string? Scent { get; set; }
+        public Scent Scent { get; set; }
         public bool IsBestSeller { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsDailyOffer { get; set; }

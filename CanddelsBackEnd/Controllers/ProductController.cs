@@ -183,7 +183,7 @@ namespace CanddelsBackEnd.Controllers
             existingProduct.Features = product.Features ?? existingProduct.Features;
             existingProduct.CalltoAction = product.CallToAction ?? existingProduct.CalltoAction;
             existingProduct.DiscountPercentage = product.DiscountPercentage;
-            existingProduct.Scent.Name = product.Scent ;
+            existingProduct.ScentId = product.ScentId;
             existingProduct.IsBestSeller = product.IsBestSeller ;
             existingProduct.IsDailyOffer = product.IsDailyOffer;
 

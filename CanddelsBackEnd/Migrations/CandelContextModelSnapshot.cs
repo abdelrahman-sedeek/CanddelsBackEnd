@@ -111,25 +111,46 @@ namespace CanddelsBackEnd.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Scent1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Scent2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Scent3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Scent4")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Weight")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("customProducts");
+                });
+
+            modelBuilder.Entity("CanddelsBackEnd.Models.CustomProductScent", b =>
+                {
+                    b.Property<int>("CustomProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ScentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CustomProductId", "ScentId");
+
+                    b.HasIndex("ScentId");
+
+                    b.ToTable("CustomProductScents");
+                });
+
+            modelBuilder.Entity("CanddelsBackEnd.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
@@ -363,6 +384,31 @@ namespace CanddelsBackEnd.Migrations
                     b.ToTable("ShippingDetails");
                 });
 
+            modelBuilder.Entity("CanddelsBackEnd.Models.Store", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Imageurl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stores");
+                });
+
             modelBuilder.Entity("CanddelsBackEnd.Models.CartItem", b =>
                 {
                     b.HasOne("CanddelsBackEnd.Models.Cart", "Cart")
@@ -384,6 +430,25 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("CustomProduct");
 
                     b.Navigation("ProductVariant");
+                });
+
+            modelBuilder.Entity("CanddelsBackEnd.Models.CustomProductScent", b =>
+                {
+                    b.HasOne("CanddelsBackEnd.Models.CustomProduct", "CustomProduct")
+                        .WithMany("CustomProductScents")
+                        .HasForeignKey("CustomProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CanddelsBackEnd.Models.Scent", "Scent")
+                        .WithMany("CustomProductScents")
+                        .HasForeignKey("ScentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CustomProduct");
+
+                    b.Navigation("Scent");
                 });
 
             modelBuilder.Entity("CanddelsBackEnd.Models.Order", b =>
@@ -465,6 +530,8 @@ namespace CanddelsBackEnd.Migrations
                     b.Navigation("CartItem")
                         .IsRequired();
 
+                    b.Navigation("CustomProductScents");
+
                     b.Navigation("OrderItems");
                 });
 
@@ -488,6 +555,8 @@ namespace CanddelsBackEnd.Migrations
 
             modelBuilder.Entity("CanddelsBackEnd.Models.Scent", b =>
                 {
+                    b.Navigation("CustomProductScents");
+
                     b.Navigation("Products");
                 });
 #pragma warning restore 612, 618

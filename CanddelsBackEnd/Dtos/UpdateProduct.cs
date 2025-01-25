@@ -6,7 +6,7 @@ namespace CanddelsBackEnd.Dtos
     public class UpdateProduct
     {
         public string Name { get; set; }
-        public string Scent { get; set; }
+        public int ScentId { get; set; }  
         public string? Benefits { get; set; }
         public string? Description { get; set; }
         public string? Features { get; set; }

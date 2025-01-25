@@ -20,7 +20,7 @@ namespace CanddelsBackEnd.Specifications
         {
             AddInclude(X => X.productVariants);
             AddInclude(X =>X.Category);
-
+            AddInclude(x => x.Scent);
             ApplyPaging(ProductPrams.PageSize * (ProductPrams.PageIndex - 1), ProductPrams.PageSize);
  
 

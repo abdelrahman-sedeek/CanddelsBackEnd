@@ -3,6 +3,7 @@ using CanddelsBackEnd.Dtos;
 using CanddelsBackEnd.Models;
 using CanddelsBackEnd.Repositories.CartRepo;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace CanddelsBackEnd.Services
 {
@@ -65,14 +66,22 @@ namespace CanddelsBackEnd.Services
         }
         public async Task<string> AddCustomProductToCartAsync(AddCustomProductToCartDto request)
         {
+
+            if(request.ScentIds is null || !request.ScentIds.Any())
+            {
+                throw new ValidationException("At least one scent must be selected.");
+            }
+
             var cart = await GetOrCreateCartAsync(request.SessionId);
             var customProduct = new CustomProduct
             {
-                Scent1 = request.Scent1,
-                Scent2 = request.Scent2,
-                Scent3 = request.Scent3,
-                Scent4 = request.Scent4,  
-                Weight = request.Weight ?? 0
+                Weight = request.Weight ?? 0,
+
+                CustomProductScents = request.ScentIds.Select(scentId => new CustomProductScent
+                {
+                    ScentId = scentId
+                }).ToList()
+
             };
             _context.customProducts.AddAsync(customProduct);
 
@@ -133,14 +142,16 @@ namespace CanddelsBackEnd.Services
                     return new
                     {
                         ci.CustomProductId,
-                        ci.CustomProduct.Scent1,
-                        ci.CustomProduct.Scent2,
-                        ci.CustomProduct.Scent3,
-                        ci.CustomProduct.Scent4,
                         ci.CustomProduct.Weight,
-                        ci.Quantity
-                 
-
+                        ci.Quantity,
+                        Scents = ci.CustomProduct.CustomProductScents
+                        .Select(cps => new
+                        {
+                            cps.Scent.Id,
+                            cps.Scent.Name,
+                            cps.Scent.Description,
+                            cps.Scent.ImageUrl
+                        })                  
 
                     } as object;
                 }
