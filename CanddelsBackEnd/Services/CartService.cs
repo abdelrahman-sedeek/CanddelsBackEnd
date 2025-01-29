@@ -97,20 +97,76 @@ namespace CanddelsBackEnd.Services
             await _cartRepository.SaveChangesAsync();
             return " custom Product added to cart successfully";
         }
-        public async Task<string?> RemoveFromCartAsync(RemoveFromCartRequest request)
+
+        public async Task<string> UpdateQuantityAsync(UpdateCartQuantityDto dto)
         {
-            var cart = await _cartRepository.GetCartBySessionIdAsync(request.SessionId);
-            if (cart == null) return null;
+            if (!dto.IsValid())
+                throw new ValidationException("Must provide either ProductVariantId or CustomProductId");
 
-            var cartItem = cart.CartItems.SingleOrDefault(ci => ci.ProductVariantId == request.ProductVariantId);
-            if (cartItem == null) return null;
+            var cart = await _cartRepository.GetCartBySessionIdAsync(dto.SessionId);
+            if (cart == null) return "Cart not found";
 
+            CartItem cartItem = null;
+
+            if (dto.ProductVariantId.HasValue)
+            {
+                cartItem = cart.CartItems.SingleOrDefault(ci =>
+                    ci.ProductVariantId == dto.ProductVariantId.Value);
+            }
+            else if (dto.CustomProductId.HasValue)
+            {
+                cartItem = cart.CartItems.SingleOrDefault(ci =>
+                    ci.CustomProductId == dto.CustomProductId.Value);
+            }
+
+            if (cartItem == null) return "Cart item not found";
+
+            cartItem.Quantity = dto.Quantity;
+            await _cartRepository.SaveChangesAsync();
+
+            return $"{(dto.ProductVariantId.HasValue ? "Product" : "Custom product")} quantity updated";
+        }
+        public async Task<string> RemoveFromCartAsync(RemoveFromCartRequest dto)
+        {
+            if (!dto.IsValid())
+                throw new ValidationException("Must provide either ProductVariantId or CustomProductId");
+
+            var cart = await _cartRepository.GetCartBySessionIdAsync(dto.SessionId);
+            if (cart == null) return "Cart not found";
+
+            CartItem cartItem = null;
+
+            if (dto.ProductVariantId.HasValue)
+            {
+                cartItem = cart.CartItems.SingleOrDefault(ci =>
+                    ci.ProductVariantId == dto.ProductVariantId.Value);
+            }
+            else if (dto.CustomProductId.HasValue)
+            {
+                cartItem = cart.CartItems.SingleOrDefault(ci =>
+                    ci.CustomProductId == dto.CustomProductId.Value);
+            }
+
+            if (cartItem == null) return "Cart item not found";
+
+            // Remove cart item
             cart.CartItems.Remove(cartItem);
             await _cartRepository.SaveChangesAsync();
 
-            return "Product removed from cart";
-        }
+            // Clean up orphaned custom product
+            if (dto.CustomProductId.HasValue)
+            {
+                var customProduct = await _context.customProducts
+                    .FindAsync(dto.CustomProductId.Value);
+                if (customProduct != null)
+                {
+                    _context.customProducts.Remove(customProduct);
+                    await _context.SaveChangesAsync();
+                }
+            }
 
+            return $"{(dto.ProductVariantId.HasValue ? "Product" : "Custom product")} removed from cart";
+        }
         public async Task<IEnumerable<object>> ViewCartAsync(string sessionId)
         {
             var cart = await _cartRepository.GetCartBySessionIdAsync(sessionId);
