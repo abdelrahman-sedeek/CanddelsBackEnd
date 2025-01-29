@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using CanddelsBackEnd.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 [ApiController]
 [Route("api/cart")]
@@ -72,34 +73,47 @@ public class CartController : ControllerBase
             return Ok(new { message = result });
       
     }
-
     [HttpDelete("remove")]
-    public async Task<IActionResult> RemoveFromCart([FromBody] RemoveFromCartRequest removeFromCartRequest)
+    public async Task<IActionResult> RemoveFromCart([FromBody] RemoveFromCartRequest dto)
     {
-        var result = await _cartService.RemoveFromCartAsync(removeFromCartRequest);
-        return Ok(new { message = result });
+        if (!dto.IsValid())
+            return BadRequest("Must provide either ProductVariantId or CustomProductId");
+
+        try
+        {
+            var result = await _cartService.RemoveFromCartAsync(dto);
+            return result switch
+            {
+                "Cart not found" or "Cart item not found" => NotFound(result),
+                _ => Ok(new { message = result })
+            };
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
 
     [HttpPut("update-quantity")]
-    public async Task<IActionResult> UpdateQuantity([FromBody] UpdateCartQuantityDto updateCartQuantityDto)
+    public async Task<IActionResult> UpdateQuantity([FromBody] UpdateCartQuantityDto dto)
     {
-        var cart = await _candelContext.Carts
-            .Include(c => c.CartItems)
-            .SingleOrDefaultAsync(c => c.SessionId == updateCartQuantityDto.SessionId);
+        if (!dto.IsValid())
+            return BadRequest("Must provide either ProductVariantId or CustomProductId");
 
-        var cartItem = cart?.CartItems.SingleOrDefault(ci => ci.ProductVariantId == updateCartQuantityDto.ProductVariantId);
-
-        if (cartItem == null)
+        try
         {
-            return NotFound("Cart item not found");
+            var result = await _cartService.UpdateQuantityAsync(dto);
+            return result switch
+            {
+                "Cart not found" or "Cart item not found" => NotFound(result),
+                _ => Ok(new { message = result })
+            };
         }
-
-        cartItem.Quantity = updateCartQuantityDto.Quantity;
-        await _candelContext.SaveChangesAsync();
-
-        return Ok("Quantity updated successfully");
-
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpGet("view")]
